@@ -39,3 +39,29 @@ __Performance:__
 
 __Localization:__
 * Date format for meetings will follow the template: dd/mm/yyyy
+
+## Activity Diagram
+
+[Link](https://lucid.app/lucidchart/dd6790d3-06f6-428d-bfe3-b897265bea45/edit?invitationId=inv_af3ae1b8-ed85-4b20-8efb-a4c7f5fad8e2&page=0_0#) (if the image below is not visible enough)
+![Activity diagram](https://user-images.githubusercontent.com/87432371/203645406-402d7612-03dd-4e9a-8426-1b66f3c07789.png)
+
+## Project Charter Document
+
+![Project charter document](https://user-images.githubusercontent.com/87432371/203646021-769d04de-6d24-4c7c-b376-743c97bf2cc6.png)
+
+## Definition of Done and Definition of Ready
+
+__Definition of Done:__
+* Code is complete
+* All functionalities are covered
+* Code builds without errors
+* All the tests pass (including User Acceptance Testing)
+* Documentation is complete
+* Tasks closed and remaining hours is set to 0
+
+__Definition of Ready:__
+* User Story is clear
+* User Story is accepted by every member of the team
+* User Story does not compromise the security of the application
+* User Story does not compromise the performance of the application
+* All the dependencies are completed
