@@ -4,6 +4,10 @@
 
 RecipeBuddy features a mentoring website for cooking, built with Spring Boot + Maven, and Angular.
 
+Ever wanted to get rid of unhealthy eating habits, take up the hobby of cooking, or just overall improve your culinary skills? RecipeBuddy is the app that can do just that, and more, through mentorship!
+
+Our website focuses on providing support for people that want to expand their repertoire of cooking. It features a register/login system that lets people choose between two types of users: trainee and mentor. Through the functionality of associating mentors to trainees, users can search for and interact with people who they think they would get along with, by subscribing to their cooking courses, and in turn, mentors can organize video calls with their trainees. Moreover, the platform gives both trainees and mentors the option to post their own recipes, this way creating an inclusive and learn-friendly environment. In order to find out more about others, and edit user info, each user has their own profile page on which data such as their: posted recipes, posted courses (only for mentors), personal info; is displayed, and can be edited only by the owner of the account.
+
 ## Problem Statement
 
 * The problem & The affected audience: people inexperienced at cooking find it difficult to improve their culinary skills without live guidance, or without someone to mentor them.
@@ -14,7 +18,7 @@ RecipeBuddy features a mentoring website for cooking, built with Spring Boot + M
 
 ## Functional Decomposition
 
-![Functional decomposition](https://user-images.githubusercontent.com/87432371/202543315-3077080b-10dd-4fe2-b5aa-a629132cc7e5.png)
+![Functional decomposition](https://user-images.githubusercontent.com/87432371/204291371-ca5f2e30-cec3-46e4-85af-c48db7cbd5c3.png)
 
 ## Non-Functional Requirements List
 
@@ -65,3 +69,8 @@ __Definition of Ready:__
 * User Story does not compromise the security of the application
 * User Story does not compromise the performance of the application
 * All the dependencies are completed
+
+## Roadmap
+
+![Roadmap](https://user-images.githubusercontent.com/87432371/204295588-9c8c5977-fb2a-4f77-8f2e-37d2623fbf99.png)
+
