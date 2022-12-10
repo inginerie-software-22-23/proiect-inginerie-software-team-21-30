@@ -15,13 +15,11 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", unique = true)
+    @Column(unique = true)
     private String name;
 
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "email")
     private String email;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
