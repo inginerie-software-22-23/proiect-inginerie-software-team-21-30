@@ -15,9 +15,13 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build and test:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        working-directory: ./Backend
 
     steps:
     - uses: actions/checkout@v3
@@ -27,9 +31,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-      working-directory: ./Backend
-      run: mvn -B package --file pom.xml
+    - name: Build and Test with Maven
+      run: |
+        mvn -B package --file pom.xml
+        mvn test
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
