@@ -1,14 +1,38 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import { Endpoints } from "../enums/endpoints.enum";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    constructor(private _http: HttpClient) {}
+    tokenValue = new BehaviorSubject<string>(null);
+    constructor(private _http: HttpClient) { }
 
     register(payload: { name: string, password: string, email: string }) {
         return this._http.post(Endpoints.REGISTER, payload);
+    }
+
+    login(payload: { name: string, password: string }) {
+        return this._http.post(Endpoints.LOGIN, payload);
+    }
+
+    setToken(token: string) {
+        this.tokenValue.next(token);
+        localStorage.setItem("Token", token);
+    }
+
+    refreshToken() {
+        const token = localStorage.getItem("Token");
+        console.log(token);
+        if (!token) {
+            return;
+        }
+        this.tokenValue.next(token);
+    }
+
+    getToken() {
+        return this.tokenValue.asObservable();
     }
 }

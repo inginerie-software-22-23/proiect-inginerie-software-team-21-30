@@ -9,6 +9,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
+import { HomeModule } from './modules/home/home.module';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -22,9 +24,11 @@ import { MessagesModule } from 'primeng/messages';
     SharedModule,
     RouterModule,
     HttpClientModule,
-    MessagesModule
+    MessagesModule,
+    HomeModule
   ],
   providers: [
+    AuthGuard,
     MessageService
   ],
   bootstrap: [AppComponent]
