@@ -5,6 +5,7 @@ import { catchError, take, takeWhile } from 'rxjs/operators';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { NotificationType } from 'src/app/enums/notifications.enum';
 
 @Component({
   selector: 'app-register',
@@ -54,10 +55,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
         catchError(() => of(null))
       ).subscribe((res: any) => {
         if (!res) {
-          this._notificationsService.createMessage('error', 'Register', 'There was an error on the server.');
+          this._notificationsService.createMessage(NotificationType.ERROR, 'Register', 'There was an error on the server.');
           this.registerForm.reset();
         } else {
-          this._notificationsService.createMessage('success', 'Register', 'Account created.');
+          this._notificationsService.createMessage(NotificationType.SUCCESS, 'Register', 'Account created.');
           setTimeout(() => {
             this._router.navigate(['/login']);
           }, 2000);
