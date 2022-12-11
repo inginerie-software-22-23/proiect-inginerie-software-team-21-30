@@ -1,21 +1,21 @@
 <div class="container">
-    <form>
+    <form [formGroup]="registerForm">
         <div class="form-row">
             <label for="username">Username</label>
-            <input>
+            <input formControlName="name" [ngClass]="{'input-error': (name.touched && !name.valid)}"/>
         </div>
 
         <div class="form-row">
             <label for="password">Password</label>
-            <input type="password">
+            <input formControlName="password" [ngClass]="{'input-error': (password.touched && !password.valid)}" type="password">
         </div>
 
         <div class="form-row">
-            <label for="confirm-password">Confirm Password</label>
-            <input type="confirm-password">
+            <label for="email">Email</label>
+            <input formControlName="email" [ngClass]="{'input-error': (email.touched && !email.valid)}" type="email">
         </div>
 
-        <button type="button" class="register-btn">Register</button>
+        <button type="button" class="register-btn" (click)="submitRegister()">Register</button>
         <button type="button" class="login-btn" [routerLink]="['/login']">I already have an account</button>
     </form>
 </div>
