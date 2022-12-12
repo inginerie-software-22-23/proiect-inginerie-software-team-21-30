@@ -47,8 +47,7 @@ public class WebSecurityConfig {
                 .antMatchers("/security/register").permitAll()
                 .antMatchers("/security/login").permitAll()
                 // Our private endpoints
-                .antMatchers("/manage-courses/**").hasRole(String.valueOf(SecurityConstants.Role.MENTOR))
-                .anyRequest().authenticated();
+                .antMatchers("/manage-courses/**").hasRole(String.valueOf(SecurityConstants.Role.MENTOR));
 
         http.headers().frameOptions().sameOrigin();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
