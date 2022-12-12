@@ -1,16 +1,23 @@
 <div class="container">
-    <form>
+    <form [formGroup]="loginForm">
         <div class="form-row">
-            <label for="username">Username</label>
-            <input>
+            <label for="name">Username</label>
+            <input id="name"
+                   formControlName="name">
         </div>
 
         <div class="form-row">
             <label for="password">Password</label>
-            <input type="password">
+            <input id="password"
+                   type="password"
+                   formControlName="password">
         </div>
 
-        <button type="button" class="login-btn">Login</button>
-        <button type="button" class="create-btn" [routerLink]="['/register']">I don't have an account</button>
+        <button type="button"
+                class="login-btn"
+                (click)="submitLogin()">Login</button>
+        <button type="button"
+                class="create-btn"
+                [routerLink]="['/register']">I don't have an account</button>
     </form>
 </div>

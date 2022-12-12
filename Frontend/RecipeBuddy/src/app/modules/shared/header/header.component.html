@@ -2,6 +2,7 @@
     <h2>RecipeBuddy</h2>
     <div class="links">
         <a>About Us</a>
-        <a>Login</a>
+        <a (click)="logout()"
+           *ngIf="token">Logout</a>
     </div>
 </header>
