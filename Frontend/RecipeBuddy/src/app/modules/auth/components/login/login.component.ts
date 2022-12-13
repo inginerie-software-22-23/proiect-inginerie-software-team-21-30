@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError, of, take, takeWhile } from 'rxjs';
+import { catchError, Observable, of, take, takeWhile } from 'rxjs';
 import { NotificationType } from 'src/app/enums/notifications.enum';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
@@ -47,11 +47,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       this._authService.login(payload).pipe(
         take(1),
         takeWhile(() => this.alive),
-        catchError(() => of(null))
+        catchError((error) => this.handleLoginError(error))
       ).subscribe((res: any) => {
-        if (!res.jwt) {
-          this._notificationsService.createMessage(NotificationType.ERROR, 'Login', 'Nume sau parola incorecte.');
-        } else {
+        if (res && res.jwt) {
           this._notificationsService.createMessage(NotificationType.SUCCESS, 'Login', 'Login successful.');
           this._authService.setToken(res.jwt);
           setTimeout(() => {
@@ -60,6 +58,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  handleLoginError(error): Observable<any> {
+    const errorMessage = (error?.error?.message) || 'There was an error on the server.';
+
+    this._notificationsService.createMessage(NotificationType.ERROR, 'Register', errorMessage);
+    return of(null);
   }
 
   ngOnDestroy(): void {

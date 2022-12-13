@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { catchError, take, takeWhile } from 'rxjs/operators';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NotificationType } from 'src/app/enums/notifications.enum';
 
 @Component({
@@ -52,12 +52,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this._authService.register(payload).pipe(
         take(1),
         takeWhile(() => this.alive),
-        catchError(() => of(null))
+        catchError((error) => this.handleRegisterError(error))
       ).subscribe((res: any) => {
-        if (!res) {
-          this._notificationsService.createMessage(NotificationType.ERROR, 'Register', 'There was an error on the server.');
-          this.registerForm.reset();
-        } else {
+        if (res) {
           this._notificationsService.createMessage(NotificationType.SUCCESS, 'Register', 'Account created.');
           setTimeout(() => {
             this._router.navigate(['/login']);
@@ -65,6 +62,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  handleRegisterError(error): Observable<any> {
+    const errorMessage = (error?.error?.message) || 'There was an error on the server.';
+
+    this._notificationsService.createMessage(NotificationType.ERROR, 'Register', errorMessage);
+    return of(null);
   }
 
   ngOnDestroy(): void {

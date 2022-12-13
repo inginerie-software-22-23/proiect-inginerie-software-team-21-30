@@ -2,17 +2,25 @@
     <form [formGroup]="registerForm">
         <div class="form-row">
             <label for="username">Username</label>
-            <input formControlName="name" [ngClass]="{'input-error': (name.touched && !name.valid)}"/>
+            <input formControlName="name"
+                    [ngClass]="{'input-error': (name.touched && !name.valid)}"
+                    autocomplete="off"/>
         </div>
 
         <div class="form-row">
             <label for="password">Password</label>
-            <input formControlName="password" [ngClass]="{'input-error': (password.touched && !password.valid)}" type="password">
+            <input formControlName="password"
+            [ngClass]="{'input-error': (password.touched && !password.valid)}"
+            type="password"
+            autocomplete="off">
         </div>
 
         <div class="form-row">
             <label for="email">Email</label>
-            <input formControlName="email" [ngClass]="{'input-error': (email.touched && !email.valid)}" type="email">
+            <input formControlName="email"
+            [ngClass]="{'input-error': (email.touched && !email.valid)}"
+            type="email"
+            autocomplete="off">
         </div>
 
         <button type="button" class="register-btn" (click)="submitRegister()">Register</button>
