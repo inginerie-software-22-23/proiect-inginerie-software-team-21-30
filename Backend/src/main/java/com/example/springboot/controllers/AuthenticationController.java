@@ -3,7 +3,7 @@ package com.example.springboot.controllers;
 import com.example.springboot.DTOs.JwtDTO;
 import com.example.springboot.models.User;
 import com.example.springboot.services.UserDetailsServiceImpl;
-import com.example.springboot.services.UserService;
+import com.example.springboot.services.UserServiceImpl;
 import com.example.springboot.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class AuthenticationController {
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @PostMapping(value = "/login")
     public JwtDTO createAuthenticationToken(@RequestBody User user) throws Exception {
@@ -45,7 +45,7 @@ public class AuthenticationController {
     @CrossOrigin
     @PostMapping(value = "/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User create(@RequestBody User user) {
+    public String create(@RequestBody User user) {
         return userService.create(user);
     }
 
