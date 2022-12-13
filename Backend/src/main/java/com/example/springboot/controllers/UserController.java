@@ -1,7 +1,7 @@
 package com.example.springboot.controllers;
 
 import com.example.springboot.DTOs.UserDTO;
-import com.example.springboot.services.UserService;
+import com.example.springboot.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @CrossOrigin
     @GetMapping("/id/{id}")
