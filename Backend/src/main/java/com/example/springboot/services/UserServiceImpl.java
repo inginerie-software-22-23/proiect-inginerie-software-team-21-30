@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public String create(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-        User existingUser = userRepository.findById(user.getId()).orElse(null);
+        User existingUser = userRepository.findByName(user.getName()).orElse(null);
         if (existingUser == null) {
             userRepository.save(user);
             return "User saved successfully";
