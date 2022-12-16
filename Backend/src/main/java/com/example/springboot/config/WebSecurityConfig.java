@@ -46,7 +46,10 @@ public class WebSecurityConfig {
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/security/register").permitAll()
                 .antMatchers("/security/login").permitAll()
+                .antMatchers("/course/courses").permitAll()
                 // Our private endpoints
+                .antMatchers("/course/{username}").hasRole(String.valueOf(SecurityConstants.Role.MENTOR))
+                .antMatchers("/course/create").hasRole(String.valueOf(SecurityConstants.Role.MENTOR))
                 .antMatchers("/manage-courses/**").hasRole(String.valueOf(SecurityConstants.Role.MENTOR));
 
         http.headers().frameOptions().sameOrigin();

@@ -12,6 +12,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User implements Serializable {
     @Id
+//    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,4 +30,7 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Course> courses;
 }

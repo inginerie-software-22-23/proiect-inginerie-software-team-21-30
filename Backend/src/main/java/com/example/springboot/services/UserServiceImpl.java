@@ -39,5 +39,4 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException("User already exists");
         }
     }
-
 }
