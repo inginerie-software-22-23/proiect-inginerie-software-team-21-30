@@ -33,4 +33,7 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private Set<Course> courses;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Subscription> subscriptions;
 }

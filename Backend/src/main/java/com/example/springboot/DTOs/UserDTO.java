@@ -13,6 +13,7 @@ public class UserDTO {
     private String password;
     private String email;
     private Collection<RoleDTO> roles;
+    private Collection<SubscriptionDTO> subscriptions;
 
     public UserDTO(User user) {
         this.id = user.getId();
@@ -22,6 +23,10 @@ public class UserDTO {
         this.roles = user.getRoles()
                 .stream()
                 .map(RoleDTO::new)
+                .collect(Collectors.toList());
+        this.subscriptions = user.getSubscriptions()
+                .stream()
+                .map(SubscriptionDTO::new)
                 .collect(Collectors.toList());
     }
 }
