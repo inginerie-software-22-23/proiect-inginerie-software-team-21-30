@@ -2,18 +2,17 @@ package com.example.springboot.DTOs;
 
 import com.example.springboot.models.Course;
 import com.example.springboot.models.Subscription;
-import com.example.springboot.models.User;
+import lombok.Data;
 
-public class SubscriptionDTO {
+@Data
+public class SubscriptionWithCourseDTO {
     private Long id;
     private Course course;
-    private User trainee;
     private String joinDate;
 
-    public SubscriptionDTO(Subscription subscription) {
+    public SubscriptionWithCourseDTO(Subscription subscription) {
         this.id = subscription.getId();
         this.course = subscription.getCourse();
-        this.trainee = subscription.getTrainee();
         this.joinDate = subscription.getJoinDate();
     }
 }

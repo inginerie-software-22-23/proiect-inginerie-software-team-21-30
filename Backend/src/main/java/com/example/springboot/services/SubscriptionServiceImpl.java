@@ -42,8 +42,13 @@ public class SubscriptionServiceImpl implements SubscriptionSerivce {
             throw new TraineeAlreadySubscribedToCourseException(
                     "Trainee with id " + traineeId + " is already subscribed to course with id " + courseId);
         } else {
+            trainee.get().getSubscriptions().add(newSubscription);
+            course.get().getSubscriptions().add(newSubscription);
+
             subscriptionsRepository.save(newSubscription);
-            return "Trainee subscribed successfully";
+            userRepository.save(trainee.get());
+            courseRepository.save(course.get());
+            return "Trainee subscribed to course successfully";
         }
     }
 }

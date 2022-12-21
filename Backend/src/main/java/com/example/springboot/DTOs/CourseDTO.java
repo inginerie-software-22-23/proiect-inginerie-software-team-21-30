@@ -1,10 +1,12 @@
 package com.example.springboot.DTOs;
 
 import com.example.springboot.models.Course;
+import lombok.Data;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Data
 public class CourseDTO {
     private Long id;
     private String name;
@@ -12,7 +14,7 @@ public class CourseDTO {
     private String longDescription;
     private String meetLink;
     private UserDTO mentor;
-    private Collection<SubscriptionDTO> subscriptions;
+    private Collection<SubscriptionWithUserDTO> subscriptions;
 
     public CourseDTO(Course course) {
         this.id = course.getId();
@@ -23,7 +25,7 @@ public class CourseDTO {
         this.mentor = new UserDTO(course.getUser());
         this.subscriptions = course.getSubscriptions()
                 .stream()
-                .map(SubscriptionDTO::new)
+                .map(SubscriptionWithUserDTO::new)
                 .collect(Collectors.toList());
     }
 }

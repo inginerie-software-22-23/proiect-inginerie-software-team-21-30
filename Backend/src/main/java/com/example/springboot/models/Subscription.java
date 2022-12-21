@@ -1,10 +1,11 @@
 package com.example.springboot.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Getter
@@ -19,17 +20,21 @@ public class Subscription {
     private Long id;
 
     @ManyToOne
-    private User trainee;
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference(value = "user-subscriptions")
+    private User user;
+
 
     @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    @JsonBackReference(value = "course-subscriptions")
     private Course course;
-
     private String joinDate;
 
-    public Subscription(User trainee, Course course) {
-        this.trainee = trainee;
+    public Subscription(User user, Course course) {
+        this.user = user;
         this.course = course;
-        this.joinDate = LocalDate.now().toString();
+        this.joinDate = LocalDateTime.now().toString();
     }
 
     @Override
@@ -37,16 +42,16 @@ public class Subscription {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Subscription that = (Subscription) o;
-        return trainee != null && Objects.equals(trainee, that.getTrainee())
-                && course != null && Objects.equals(course, that.getCourse());
+        return user != null && Objects.equals(user, that.user)
+                && course != null && Objects.equals(course, that.course);
     }
 
     @Override
     public int hashCode() {
         int result = 17;
 
-        if (trainee != null) {
-            result = 31 * result + trainee.hashCode();
+        if (user != null) {
+            result = 31 * result + user.hashCode();
         }
 
         if (course != null) {
