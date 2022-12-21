@@ -2,7 +2,9 @@ package com.example.springboot.controllers;
 
 import com.example.springboot.DTOs.CourseDTO;
 import com.example.springboot.models.Course;
-import com.example.springboot.services.CourseService;
+import com.example.springboot.models.User;
+import com.example.springboot.services.CourseServiceImpl;
+import com.example.springboot.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/course")
 public class CourseController {
-//    @Autowired
-    private CourseService courseService;
+    @Autowired
+    private CourseServiceImpl courseService;
+    @Autowired
+    private UserServiceImpl userService;
 
 //    @CrossOrigin
 //    @GetMapping("/id/{id}")
@@ -51,9 +55,11 @@ public class CourseController {
     }
 
     @CrossOrigin
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/create/{mentorId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@RequestBody Course course) {
+    public String create(@RequestBody Course course, @PathVariable Long mentorId) {
+        User mentor = userService.findById(mentorId);
+        course.setUser(mentor);
         return courseService.create(course);
     }
 }
