@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -14,16 +15,16 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public Course findById(@PathVariable Long id) throws Exception {
-        return courseRepository.findById(id)
+    public Course findById(@PathVariable Long courseId) throws Exception {
+        return courseRepository.findById(courseId)
                 .orElseThrow(()
-                        -> new Exception("No course found with id = " + id));
+                        -> new Exception("No course found with id = " + courseId));
     }
 
-    public Course findByName(@PathVariable String name) throws Exception {
-        return courseRepository.findByName(name)
-                .orElseThrow(()
-                        -> new Exception("No course found with name " + name));
+    public List<Course> filterByName(@PathVariable String courseName) throws Exception {
+        return courseRepository.findAll().stream().
+                filter(x -> x.getName().contains(courseName)).
+                collect(Collectors.toList());
     }
 
     public List<Course> findAll() {
@@ -39,5 +40,15 @@ public class CourseServiceImpl implements CourseService {
     public String create(Course course) {
         courseRepository.save(course);
         return "Course saved successfully";
+    }
+
+    public String update(Course course) {
+        courseRepository.save(course);
+        return "Course updated successfully";
+    }
+
+    public String delete(Long courseId) {
+        courseRepository.deleteById(courseId);
+        return "Course deleted successfully";
     }
 }
