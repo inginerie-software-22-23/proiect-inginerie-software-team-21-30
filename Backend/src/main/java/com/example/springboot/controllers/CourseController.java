@@ -20,18 +20,6 @@ public class CourseController {
     @Autowired
     private UserServiceImpl userService;
 
-//    @CrossOrigin
-//    @GetMapping("/id/{id}")
-//    public CourseDTO findById(@PathVariable Long id) throws Exception {
-//        return new CourseDTO(courseService.findById(id));
-//    }
-//
-//    @CrossOrigin
-//    @GetMapping("/name/{name}")
-//    public CourseDTO findByName(@PathVariable String name) throws Exception {
-//        return new CourseDTO(courseService.findByName(name));
-//    }
-
     @CrossOrigin
     @GetMapping("/courses")
     public List<CourseDTO> findAll() {
@@ -44,7 +32,7 @@ public class CourseController {
     }
 
     @CrossOrigin
-    @GetMapping("/courses/{username}")
+    @GetMapping("/courses/mentor/{username}")
     public List<CourseDTO> findCoursesByMentor(@PathVariable String username) {
         List<Course> courses = courseService.findCoursesByMentor(username);
         List<CourseDTO> coursesToReturn = new ArrayList<>();
@@ -55,11 +43,47 @@ public class CourseController {
     }
 
     @CrossOrigin
+    @GetMapping("/courses/{courseName}")
+    public List<CourseDTO> filterByName(@PathVariable String courseName) throws Exception {
+        List<Course> coursesFilteredByName = courseService.filterByName(courseName);
+        List<CourseDTO> coursesToReturn = new ArrayList<>();
+        for (Course course : coursesFilteredByName) {
+            coursesToReturn.add(new CourseDTO(course));
+        }
+        return coursesToReturn;
+    }
+
+    @CrossOrigin
+    @GetMapping("/{courseId}")
+    public CourseDTO findById(@PathVariable Long courseId) throws Exception {
+        return new CourseDTO(courseService.findById(courseId));
+    }
+
+    @CrossOrigin
     @PostMapping(value = "/create/{mentorId}")
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@RequestBody Course course, @PathVariable Long mentorId) {
         User mentor = userService.findById(mentorId);
         course.setUser(mentor);
         return courseService.create(course);
+    }
+
+    @CrossOrigin
+    @PutMapping(value = "/update/{courseId}")
+    public String update(@RequestBody Course newCourseData, @PathVariable Long courseId) throws Exception {
+        Course courseToUpdate = courseService.findById(courseId);
+
+        courseToUpdate.setName(newCourseData.getName());
+        courseToUpdate.setShortDescription(newCourseData.getShortDescription());
+        courseToUpdate.setLongDescription(newCourseData.getLongDescription());
+        courseToUpdate.setMeetLink(newCourseData.getMeetLink());
+
+        return courseService.update(courseToUpdate);
+    }
+
+    @CrossOrigin
+    @DeleteMapping(value = "/delete/{courseId}")
+    public String delete(@PathVariable Long courseId) {
+        return courseService.delete(courseId);
     }
 }

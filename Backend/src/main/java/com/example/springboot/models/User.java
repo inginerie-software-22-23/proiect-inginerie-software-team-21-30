@@ -1,5 +1,6 @@
 package com.example.springboot.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -32,5 +33,6 @@ public class User implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private Set<Course> courses;
 }
