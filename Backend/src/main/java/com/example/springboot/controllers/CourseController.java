@@ -1,6 +1,7 @@
 package com.example.springboot.controllers;
 
 import com.example.springboot.DTOs.CourseDTO;
+import com.example.springboot.DTOs.SubscriptionWithCourseDTO;
 import com.example.springboot.models.Course;
 import com.example.springboot.models.User;
 import com.example.springboot.services.CourseServiceImpl;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/course")
@@ -24,10 +26,9 @@ public class CourseController {
     @GetMapping("/courses")
     public List<CourseDTO> findAll() {
         List<Course> courses = courseService.findAll();
-        List<CourseDTO> coursesToReturn = new ArrayList<>();
-        for (Course course : courses) {
-            coursesToReturn.add(new CourseDTO(course));
-        }
+        List<CourseDTO> coursesToReturn = courses.stream()
+                .map(CourseDTO::new)
+                .collect(Collectors.toList());
         return coursesToReturn;
     }
 
@@ -35,27 +36,25 @@ public class CourseController {
     @GetMapping("/courses/mentor/{username}")
     public List<CourseDTO> findCoursesByMentor(@PathVariable String username) {
         List<Course> courses = courseService.findCoursesByMentor(username);
-        List<CourseDTO> coursesToReturn = new ArrayList<>();
-        for (Course course : courses) {
-            coursesToReturn.add(new CourseDTO(course));
-        }
+        List<CourseDTO> coursesToReturn = courses.stream()
+                .map(CourseDTO::new)
+                .collect(Collectors.toList());
         return coursesToReturn;
     }
 
     @CrossOrigin
     @GetMapping("/courses/{courseName}")
-    public List<CourseDTO> filterByName(@PathVariable String courseName) throws Exception {
+    public List<CourseDTO> filterByName(@PathVariable String courseName) {
         List<Course> coursesFilteredByName = courseService.filterByName(courseName);
-        List<CourseDTO> coursesToReturn = new ArrayList<>();
-        for (Course course : coursesFilteredByName) {
-            coursesToReturn.add(new CourseDTO(course));
-        }
+        List<CourseDTO> coursesToReturn = coursesFilteredByName.stream()
+                .map(CourseDTO::new)
+                .collect(Collectors.toList());
         return coursesToReturn;
     }
 
     @CrossOrigin
     @GetMapping("/{courseId}")
-    public CourseDTO findById(@PathVariable Long courseId) throws Exception {
+    public CourseDTO findById(@PathVariable Long courseId) {
         return new CourseDTO(courseService.findById(courseId));
     }
 
@@ -70,7 +69,7 @@ public class CourseController {
 
     @CrossOrigin
     @PutMapping(value = "/update/{courseId}")
-    public String update(@RequestBody Course newCourseData, @PathVariable Long courseId) throws Exception {
+    public String update(@RequestBody Course newCourseData, @PathVariable Long courseId) {
         Course courseToUpdate = courseService.findById(courseId);
 
         courseToUpdate.setName(newCourseData.getName());

@@ -28,28 +28,4 @@ public class CourseDTO {
                 .map(SubscriptionWithUserDTO::new)
                 .collect(Collectors.toList());
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public String getLongDescription() {
-        return longDescription;
-    }
-
-    public String getMeetLink() {
-        return meetLink;
-    }
-
-    public UserDTO getMentor() {
-        return mentor;
-    }
 }
