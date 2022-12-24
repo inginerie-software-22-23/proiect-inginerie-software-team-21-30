@@ -7,8 +7,10 @@ import java.util.List;
 
 public interface CourseService {
     Course findById(@PathVariable Long id) throws Exception;
-    Course findByName(@PathVariable String name) throws Exception;
+    List<Course> filterByName(@PathVariable String name) throws Exception;
     List<Course> findAll();
     List<Course> findCoursesByMentor(String username);
     String create(Course course);
+    String update(Course course);
+    String delete(@PathVariable Long courseId);
 }

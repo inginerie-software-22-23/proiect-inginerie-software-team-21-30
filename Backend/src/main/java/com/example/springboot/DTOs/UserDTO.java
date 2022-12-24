@@ -12,16 +12,21 @@ public class UserDTO {
     private String name;
     private String password;
     private String email;
-    private Collection<RoleDTO> roles;
+//    private Collection<RoleDTO> roles;
+    private Collection<SubscriptionWithCourseDTO> subscriptions;
 
     public UserDTO(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.password = user.getPassword();
         this.email = user.getEmail();
-        this.roles = user.getRoles()
+//        this.roles = user.getRoles()
+//                .stream()
+//                .map(RoleDTO::new)
+//                .collect(Collectors.toList());
+        this.subscriptions = user.getSubscriptions()
                 .stream()
-                .map(RoleDTO::new)
+                .map(SubscriptionWithCourseDTO::new)
                 .collect(Collectors.toList());
     }
 }
