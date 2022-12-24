@@ -46,8 +46,16 @@ public class WebSecurityConfig {
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/security/register").permitAll()
                 .antMatchers("/security/login").permitAll()
+                .antMatchers("/course/courses").permitAll()
+                .antMatchers("/course/courses/{courseName}").permitAll()
+                .antMatchers("/course/{courseId}").permitAll()
                 // Our private endpoints
-                .antMatchers("/manage-courses/**").hasRole(String.valueOf(SecurityConstants.Role.MENTOR));
+                .antMatchers("/course/courses/mentor/{username}").permitAll()
+                .antMatchers("/course/create/{mentorId}").permitAll()
+                .antMatchers("/course/update/{courseId}").permitAll()
+                .antMatchers("/course/delete/{courseId}").permitAll()
+                .antMatchers("/manage-courses/**").hasRole(String.valueOf(SecurityConstants.Role.MENTOR))
+                .antMatchers("/subscriptions/subscribe/{traineeId}/{courseId}").authenticated();
 
         http.headers().frameOptions().sameOrigin();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
