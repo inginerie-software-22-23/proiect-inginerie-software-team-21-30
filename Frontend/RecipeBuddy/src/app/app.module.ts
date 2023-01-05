@@ -18,6 +18,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
+import { MentorGuard } from './guards/mentor.guard';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { UserService } from './services/user.service';
   ],
   providers: [
     AuthGuard,
+    MentorGuard,
     MessageService,
     UserService
   ],

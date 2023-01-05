@@ -109,6 +109,7 @@ export class CoursesDialogComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   hideDialog(message?: string) {
+    this.coursesForm.reset();
     this.dialogClosed.emit(message);
   }
 

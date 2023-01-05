@@ -3,13 +3,13 @@
         width: 5px;
     }
     .p-datatable-wrapper::-webkit-scrollbar-track {
-        background: white;
+        background: #ffffff;
     }
     .p-datatable-wrapper::-webkit-scrollbar-thumb {
-        background: #888;
+        background: #458047;
     }
     .p-datatable-wrapper::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: #4caf50;
     }
 }
 
@@ -20,6 +20,11 @@
 ::ng-deep .p-datatable .p-datatable-tbody {
     background-color: white;
     min-height: 64vh;
+}
+
+::ng-deep .p-datatable {
+    border-collapse: separate;
+    border-spacing: 5em;
 }
 
 .manage-courses {
@@ -46,9 +51,10 @@
         justify-content: space-between;
         i {
             cursor: pointer;
+            color: #4caf50;
         }
         i:hover {
-            color: #4caf50;
+            font-weight: bold;
         }
     }
     .add-button-wrapper {
@@ -61,7 +67,7 @@
 }
 
 .courses-list {
-    width: 60%;
+    width: calc(100% - 4rem);
     min-width: 800px;
     .table {
         width: 100%;
