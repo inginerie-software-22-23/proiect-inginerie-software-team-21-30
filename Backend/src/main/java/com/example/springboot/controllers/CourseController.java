@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,7 @@ public class CourseController {
     public List<CourseDTO> findAll() {
         List<Course> courses = courseService.findAll();
         List<CourseDTO> coursesToReturn = courses.stream()
+                .sorted(Comparator.comparing(Course::getId))
                 .map(CourseDTO::new)
                 .collect(Collectors.toList());
         return coursesToReturn;
@@ -37,6 +39,7 @@ public class CourseController {
     public List<CourseDTO> findCoursesByMentor(@PathVariable String username) {
         List<Course> courses = courseService.findCoursesByMentor(username);
         List<CourseDTO> coursesToReturn = courses.stream()
+                .sorted(Comparator.comparing(Course::getId))
                 .map(CourseDTO::new)
                 .collect(Collectors.toList());
         return coursesToReturn;
@@ -47,6 +50,7 @@ public class CourseController {
     public List<CourseDTO> filterByName(@PathVariable String courseName) {
         List<Course> coursesFilteredByName = courseService.filterByName(courseName);
         List<CourseDTO> coursesToReturn = coursesFilteredByName.stream()
+                .sorted(Comparator.comparing(Course::getId))
                 .map(CourseDTO::new)
                 .collect(Collectors.toList());
         return coursesToReturn;
