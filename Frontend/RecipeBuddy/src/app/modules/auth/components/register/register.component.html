@@ -3,27 +3,43 @@
         <div class="form-row">
             <label for="username">Username</label>
             <input formControlName="name"
-                    [ngClass]="{'input-error': (name.touched && !name.valid)}"
-                    autocomplete="off"/>
+                   [ngClass]="{'input-error': (name.touched && !name.valid)}"
+                   autocomplete="off" />
         </div>
 
         <div class="form-row">
             <label for="password">Password</label>
             <input formControlName="password"
-            [ngClass]="{'input-error': (password.touched && !password.valid)}"
-            type="password"
-            autocomplete="off">
+                   [ngClass]="{'input-error': (password.touched && !password.valid)}"
+                   type="password"
+                   autocomplete="off">
         </div>
 
         <div class="form-row">
             <label for="email">Email</label>
             <input formControlName="email"
-            [ngClass]="{'input-error': (email.touched && !email.valid)}"
-            type="email"
-            autocomplete="off">
+                   [ngClass]="{'input-error': (email.touched && !email.valid)}"
+                   type="email"
+                   autocomplete="off">
         </div>
 
-        <button type="button" class="register-btn" (click)="submitRegister()">Register</button>
-        <button type="button" class="login-btn" [routerLink]="['/login']">I already have an account</button>
+        <div class="mentor-row">
+            <div class="field-radiobutton">
+                <p-checkbox [binary]="true"
+                            formControlName="isMentor"
+                            inputId="mentor">
+                </p-checkbox>
+                <label for="mentor">Is mentor account</label>
+            </div>
+
+        </div>
+
+
+        <button type="button"
+                class="register-btn"
+                (click)="submitRegister()">Register</button>
+        <button type="button"
+                class="login-btn"
+                [routerLink]="['/login']">I already have an account</button>
     </form>
 </div>

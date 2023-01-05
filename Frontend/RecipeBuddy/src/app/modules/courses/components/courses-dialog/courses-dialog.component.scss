@@ -1,0 +1,25 @@
+::ng-deep .p-dialog {
+    min-width: 810px;
+    min-height: 550px;
+
+    .p-dialog-header {
+        padding: 1rem 1.5rem 0.2rem 1.5rem;
+    }
+    .p-dialog-footer {
+        padding: 1rem 1.5rem;
+    }
+    .p-button {
+        width: 6rem;
+    }
+    .form-row {
+        margin-bottom: 2rem;
+    }
+    input,
+    textarea {
+        width: 30rem;
+    }
+    input:disabled,
+    textarea:disabled {
+        color: black;
+    }
+}

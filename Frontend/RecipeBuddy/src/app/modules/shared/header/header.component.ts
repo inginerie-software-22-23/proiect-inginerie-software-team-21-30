@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile(() => this.alive)
       )
-      .subscribe(tkn => { this.token = tkn; console.log("token") }
+      .subscribe(tkn => { this.token = tkn }
       );
   }
 

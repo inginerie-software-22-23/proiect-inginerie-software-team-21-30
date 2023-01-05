@@ -1,0 +1,54 @@
+<div class="manage-courses">
+    <div class="add-button-wrapper">
+        <p-button icon="pi pi-plus"
+                  (click)="addCourse()"
+                  label="Add Course"
+                  styleClass="btn btn-success"></p-button>
+    </div>
+    <div class="courses-list">
+        <div class="table">
+            <p-table [value]="courses"
+                     responsiveLayout="scroll"
+                     [scrollable]="true"
+                     scrollHeight="70vh"
+                     scrollDirection="both"
+                     [loading]="loading"
+                     [tableStyle]="{
+           'min-height': '55vh'
+           }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:30%">Name</th>
+                        <th style="width:30%">Description</th>
+                        <th style="width:30%">Meet link</th>
+                        <th style="width:10%">Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body"
+                             let-course>
+                    <tr>
+                        <td style="width:30%">{{course.name}}</td>
+                        <td style="width:30%">{{course.shortDescription}}</td>
+                        <td style="width:30%">{{course.meetLink}}
+                        </td>
+                        <td style="width: 10%">
+                            <div class="actions">
+                                <i class="pi pi-eye"
+                                   (click)="openDialog(course,actionModes.VIEW)"></i>
+                                <i class="pi pi-pencil"
+                                   (click)="openDialog(course,actionModes.EDIT)"></i>
+                                <i class="pi pi-trash"
+                                   (click)="deleteCourse(course.id)"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <courses-dialog [visible]="!!selectedCourse || selectedMode === 'add'"
+                    [course]="selectedCourse"
+                    [mode]="selectedMode"
+                    [user]="user"
+                    (dialogClosed)="onDialogClose($event)"></courses-dialog>
+</div>

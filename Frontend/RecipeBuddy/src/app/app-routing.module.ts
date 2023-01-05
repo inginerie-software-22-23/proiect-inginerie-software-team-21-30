@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './modules/auth/components/login/login.component';
 import { RegisterComponent } from './modules/auth/components/register/register.component';
+import { ManageCoursesComponent } from './modules/courses/components/manage-courses/manage-courses.component';
 import { HomeComponent } from './modules/home/components/home/home.component';
 
 const routes: Routes = [
@@ -17,6 +18,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'manage-courses',
+    component: ManageCoursesComponent,
     canActivate: [AuthGuard]
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' }

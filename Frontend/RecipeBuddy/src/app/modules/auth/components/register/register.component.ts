@@ -10,20 +10,21 @@ import { NotificationType } from 'src/app/enums/notifications.enum';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-
+  isMentorValue = false;
   registerForm: FormGroup;
   alive: boolean;
 
   constructor(private _authService: AuthService,
-              private _notificationsService: NotificationsService,
-              private _router: Router) {
+    private _notificationsService: NotificationsService,
+    private _router: Router) {
     this.registerForm = new FormGroup({
       name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$'), Validators.maxLength(20)]),
       password: new FormControl(null, [Validators.required, Validators.minLength(8), Validators.maxLength(30)]),
-      email: new FormControl(null, [Validators.required, Validators.email])
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      isMentor: new FormControl(null),
     });
   }
 
@@ -39,6 +40,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     return this.registerForm.get('email') as FormControl;
   }
 
+  get isMentor(): FormControl {
+    return this.registerForm.get('isMentor') as FormControl;
+  }
+
   ngOnInit(): void {
     this.alive = true;
   }
@@ -48,7 +53,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     if (isFormValid) {
       const payload = this.registerForm.getRawValue();
-      
+      if (payload.isMentor) {
+        payload['roles'] = [{
+          name: "MENTOR"
+        }]
+      }
+      delete payload.isMentor;
       this._authService.register(payload).pipe(
         take(1),
         takeWhile(() => this.alive),

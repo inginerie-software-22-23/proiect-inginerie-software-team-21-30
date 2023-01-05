@@ -1,0 +1,62 @@
+<p-dialog header="Course"
+          [(visible)]="visible"
+          [modal]="true"
+          (onHide)="hideDialog('')"
+          [style]="{width: '61vw',
+        height:'60vh'}">
+    <ng-template pTemplate="content">
+        <form class="form pt-5 d-flex flex-column justify-content-evenly h-100 form-wrapper align-items-center"
+              [formGroup]="coursesForm">
+            <div class="form-row">
+                <span class="p-float-label">
+                    <input id="float-input"
+                           type="text"
+                           formControlName="name"
+                           autocomplete="off"
+                           pInputText>
+                    <label for="float-input">Name</label>
+                </span>
+            </div>
+            <div class="form-row">
+                <span class="p-float-label">
+                    <input id="float-input"
+                           type="text"
+                           formControlName="shortDescription"
+                           autocomplete="off"
+                           pInputText>
+                    <label for="float-input">Short Description</label>
+                </span>
+            </div>
+            <div class="form-row">
+                <span class="p-float-label">
+                    <textarea id="float-input"
+                              rows="5"
+                              cols="51"
+                              formControlName="longDescription"
+                              autocomplete="off"
+                              pInputTextarea
+                              style="resize: none;"></textarea>
+                    <label for="float-input">Name</label>
+                </span>
+            </div>
+            <div class="form-row">
+                <span class="p-float-label">
+                    <input id="float-input"
+                           type="text"
+                           autocomplete="off"
+                           formControlName="meetLink"
+                           pInputText>
+                    <label for="float-input">Meet link</label>
+                </span>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button *ngIf="mode !== 'view'"
+                  icon="pi pi-check"
+                  (click)="saveCourse()"
+                  [disabled]="!coursesForm.valid"
+                  [label]="mode === 'edit' ? 'Save':'Add'"
+                  styleClass="btn btn-success"></p-button>
+    </ng-template>
+</p-dialog>

@@ -1,7 +1,7 @@
 <header>
     <h2>RecipeBuddy</h2>
     <div class="links">
-        <a>About Us</a>
+        <a [routerLink]="['manage-courses']" routerLinkActive="router-link-active" >Manage Courses</a>
         <a (click)="logout()"
            *ngIf="token">Logout</a>
     </div>

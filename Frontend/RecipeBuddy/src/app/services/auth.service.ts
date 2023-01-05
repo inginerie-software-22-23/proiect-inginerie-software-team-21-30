@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Endpoints } from "../enums/endpoints.enum";
+import { IUser } from "../models/user.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
     constructor(private _http: HttpClient) { }
 
     register(payload: { name: string, password: string, email: string }) {
-        return this._http.post(Endpoints.REGISTER, payload);
+        return this._http.post(Endpoints.REGISTER, payload, { responseType: "text" });
     }
 
     login(payload: { name: string, password: string }) {
@@ -25,7 +26,6 @@ export class AuthService {
 
     refreshToken() {
         const token = localStorage.getItem("Token");
-        console.log(token);
         if (!token) {
             return;
         }
