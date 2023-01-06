@@ -56,7 +56,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       if (payload.isMentor) {
         payload['roles'] = [{
           name: "MENTOR"
-        }]
+        }];
+      } else {
+        payload['roles'] = [{
+          name: "TRAINEE"
+        }];
       }
       delete payload.isMentor;
       this._authService.register(payload).pipe(
