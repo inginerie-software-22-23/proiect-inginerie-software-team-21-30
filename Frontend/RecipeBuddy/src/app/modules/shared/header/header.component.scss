@@ -1,0 +1,45 @@
+header {
+    width: 100%;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 0 7em;
+
+    @media screen and (max-width: 810px) {
+        flex-direction: column;
+    }
+}
+
+h2 {
+    cursor: pointer;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 810px) {
+        flex-direction: column;
+    }
+}
+
+a {
+    padding: 1em 2em;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.router-link-active {
+    color: #4caf50;
+}

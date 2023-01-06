@@ -33,4 +33,8 @@ export class CoursesService {
     add(course: ICourse, userId: number) {
         return this._http.post(Endpoints.COURSE + `/create/${userId}`, course, { responseType: 'text' });
     }
+
+    subscribe(traineeId: number, courseId: number) {
+        return this._http.post(Endpoints.SUBSCRIBE + `/${traineeId}/${courseId}`, null, { responseType: 'text' });
+    }
 }

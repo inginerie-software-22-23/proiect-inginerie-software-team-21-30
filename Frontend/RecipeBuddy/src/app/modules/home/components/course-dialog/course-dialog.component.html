@@ -1,0 +1,18 @@
+<p-dialog   [(visible)]="visible"
+            [modal]="true"
+            [closable]="false"
+            (onHide)="hideDialog()"
+            [style]="{ width: '80vw', minHeight:'60vh' }">
+    <ng-template pTemplate="header">
+        <h1 class="course-name">{{ (course && course.name) || 'No course name found' }}</h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <p class="course-text"><span>Description: </span> {{ (course && course.longDescription) || 'No description found' }}</p>
+        <p class="course-text"><span>Link meet: </span> {{ (course && course.meetLink) || 'No meet link found' }} </p>
+        <p class="course-text"><span>Mentor: </span> {{ (course && course.mentor && course.mentor.name) || 'No mentor found' }} </p>
+        <p class="course-text"><span>Total subscriptions: </span> {{ (course && course.subscriptions && course.subscriptions.length) || 'None' }} </p>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="hideDialog()" label="Ok" styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

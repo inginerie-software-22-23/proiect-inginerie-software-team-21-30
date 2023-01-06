@@ -8,5 +8,6 @@ export interface ICourse {
     meetLink?: string;
     mentor?: IUser[];
     subscriptions?;
+    activeSubscription?: boolean;
 }
 

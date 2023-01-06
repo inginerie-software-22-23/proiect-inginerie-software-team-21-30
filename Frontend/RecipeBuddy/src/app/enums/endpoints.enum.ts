@@ -3,5 +3,6 @@ export enum Endpoints {
     REGISTER = '/api/security/register',
     COURSES = '/api/course/courses',
     COURSE = '/api/course',
-    USER = '/api/user'
+    USER = '/api/user',
+    SUBSCRIBE = '/api/subscriptions/subscribe'
 }

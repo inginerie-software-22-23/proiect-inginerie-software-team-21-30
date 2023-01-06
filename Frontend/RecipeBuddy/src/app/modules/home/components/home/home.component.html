@@ -1,3 +1,20 @@
 <div class="home-page">
-    <h1>Welcome to RecipeBuddy</h1>
+    <div class="home-background-image">
+        <h1>Recipe Buddy</h1>
+    </div>
+    <div class="container home-subtitle">
+        <h1>Available courses</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div *ngFor="let course of (courses | async)"
+                class="col-sm-4 col-md-3 my-3">
+                <app-course-card [course]="course" (onSelectCourse)="selectCourse($event)" (onSubscribeToCourse)="subscribeToCourse($event)"></app-course-card>
+            </div>
+        </div>
+    </div>
 </div>
+<course-dialog [visible]="isDialogVisible | async"
+                [course]="selectedCourse | async"
+                (onCloseDialog)="onDialogClose()">
+</course-dialog>
