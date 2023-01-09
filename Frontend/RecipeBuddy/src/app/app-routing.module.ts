@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { MentorGuard } from './guards/mentor.guard';
 import { LoginComponent } from './modules/auth/components/login/login.component';
 import { RegisterComponent } from './modules/auth/components/register/register.component';
 import { ManageCoursesComponent } from './modules/courses/components/manage-courses/manage-courses.component';
@@ -23,7 +24,7 @@ const routes: Routes = [
   {
     path: 'manage-courses',
     component: ManageCoursesComponent,
-    canActivate: [AuthGuard]
+    canActivate: [MentorGuard]
   },
   {
     path: 'view-courses',

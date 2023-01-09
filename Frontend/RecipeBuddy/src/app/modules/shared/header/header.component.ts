@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { takeWhile } from 'rxjs';
+import { filter, take, takeWhile } from 'rxjs';
+import { IUser } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   alive = true;
   token: string;
-  constructor(private router: Router, private _authService: AuthService) { }
+  isMentor: boolean;
+  constructor(private router: Router, private _authService: AuthService, private _userService: UserService) { }
 
   ngOnInit(): void {
     this._authService.getToken()
@@ -20,11 +23,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(tkn => { this.token = tkn }
       );
+    this._userService.getUser().pipe(take(1), filter(usr => !!usr)).subscribe((user: IUser) => this.checkIfUserIsMentor(user));
+
   }
 
   logout() {
     this._authService.setToken("");
     this.router.navigate(['/login']);
+  }
+
+  checkIfUserIsMentor(user: IUser) {
+    this.isMentor = !!user.roles.filter(role => role.name === 'MENTOR');
   }
 
   ngOnDestroy(): void {

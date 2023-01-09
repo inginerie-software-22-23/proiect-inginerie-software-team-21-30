@@ -10,11 +10,12 @@ export class MentorGuard implements CanActivate {
     constructor(private router: Router, private _userService: UserService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        let userRoles
-        this._userService.getUser().pipe(take(1), filter(usr => !!usr)).subscribe((user: IUser) => {console.log(user);userRoles = user.roles})
-        console.log(userRoles)
+        let userRoles;
+        this._userService.getUser().pipe(take(1), filter(usr => !!usr)).subscribe((user: IUser) => userRoles = user.roles);
+        const filteredUserRoles = userRoles.filter(role => role.name === 'MENTOR');
+        console.log(filteredUserRoles)
 
-        if (userRoles) {
+        if (filteredUserRoles.length) {
             return true;
         }
 
