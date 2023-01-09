@@ -23,8 +23,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(tkn => { this.token = tkn }
       );
-    this._userService.getUser().pipe(take(1), filter(usr => !!usr)).subscribe((user: IUser) => this.checkIfUserIsMentor(user));
-
+    this._userService.getUser()
+      .pipe(
+        takeWhile(() => this.alive
+        ),
+        filter(usr => !!usr)
+      ).subscribe((user: IUser) => this.checkIfUserIsMentor(user));
   }
 
   logout() {
@@ -38,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   checkIfUserIsMentor(user: IUser) {
-    this.isMentor = !!user.roles.filter(role => role.name === 'MENTOR');
+    this.isMentor = !!user.roles.filter(role => role.name === 'MENTOR').length;
   }
 
   ngOnDestroy(): void {
