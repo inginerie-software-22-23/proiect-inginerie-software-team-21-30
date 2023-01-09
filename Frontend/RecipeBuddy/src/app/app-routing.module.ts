@@ -27,8 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'view-courses',
-    component: ViewCoursesComponent,
-    canActivate: [AuthGuard]
+    component: ViewCoursesComponent
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

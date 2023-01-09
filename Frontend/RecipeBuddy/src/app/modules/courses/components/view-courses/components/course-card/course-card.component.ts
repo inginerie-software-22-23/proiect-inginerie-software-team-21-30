@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, OnChanges, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { ICourse } from 'src/app/models/course.interface';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges {
 
   alive: boolean;
 
-  constructor() {}
+  constructor(private _userService: UserService) {}
 
   ngOnInit(): void {
     this.alive = true;
@@ -35,6 +36,10 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges {
     if (this.course && this.course.id) {
       this.onSubscribeToCourse.emit(this.course.id);
     }
+  }
+
+  isUserLoggedIn() {
+    return this._userService.isLoggedIn();
   }
 
   ngOnDestroy(): void {

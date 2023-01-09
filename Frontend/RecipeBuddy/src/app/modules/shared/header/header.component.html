@@ -4,8 +4,8 @@
         <a [routerLink]="['home']" routerLinkActive="router-link-active">Home</a>
         <a [routerLink]="['view-courses']" routerLinkActive="router-link-active" >Courses</a>
         <a [routerLink]="['manage-courses']" routerLinkActive="router-link-active" >Manage Courses</a>
-        <a [routerLink]="['login']" routerLinkActive="router-link-active" >Login</a>
-        <a (click)="logout()"
-           *ngIf="token">Logout</a>
+        <a *ngIf="!isUserLoggedIn()" [routerLink]="['login']" routerLinkActive="router-link-active" >Login</a>
+        <a *ngIf="isUserLoggedIn()"
+            (click)="logout()">Logout</a>
     </div>
 </header>
