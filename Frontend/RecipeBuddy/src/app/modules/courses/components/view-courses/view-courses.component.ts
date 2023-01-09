@@ -34,9 +34,6 @@ export class ViewCoursesComponent implements OnInit, OnDestroy {
     this._userService.getUser().pipe(
       takeWhile(() => this.alive)
     ).subscribe((user: IUser) => {
-      if (!user) {
-        return;
-      }
       this.user = user;
     });
   }
@@ -47,8 +44,9 @@ export class ViewCoursesComponent implements OnInit, OnDestroy {
 
   mapCourses(courses: ICourse[]): ICourse[] {
     return courses.map((course: ICourse) => {
-      const activeSubscription = course.subscriptions.find(subscription => subscription.user.name === this.user.name);
+      if (!this.user) return { ...course, activeSubscription: false };
 
+      const activeSubscription = course.subscriptions.find(subscription => subscription.user.name === this.user.name);
       return { ...course, activeSubscription: !!activeSubscription };
     });
   }

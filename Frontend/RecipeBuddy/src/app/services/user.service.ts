@@ -39,4 +39,15 @@ export class UserService {
     getUser() {
         return this.userValue.asObservable();
     }
+
+    isLoggedIn() {
+        const token = localStorage.getItem('Token');
+        
+        if (token && !!this.userValue.getValue()) return true;
+        return false;
+    }
+
+    removeUser() {
+        this.userValue.next(null);
+    }
 }

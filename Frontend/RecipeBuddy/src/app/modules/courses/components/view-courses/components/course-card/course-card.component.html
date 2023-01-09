@@ -5,7 +5,7 @@
     </ng-template>
     <p>{{ (course && course.shortDescription) || 'No description found' }}</p>
     <ng-template pTemplate="footer">
-        <p-button *ngIf="course && !(course.activeSubscription)" label="Subscribe" (click)="subscribeToCourse()"></p-button>
+        <p-button *ngIf="course && !(course.activeSubscription)" label="Subscribe" [disabled]="!isUserLoggedIn()" (click)="subscribeToCourse()"></p-button>
         <p-button *ngIf="course && course.activeSubscription" [disabled]="true" label="Subscribed"></p-button>
     </ng-template>
 </p-card>

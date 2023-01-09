@@ -30,6 +30,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout() {
     this._authService.setToken("");
     this.router.navigate(['/login']);
+    this._userService.removeUser();
+  }
+
+  isUserLoggedIn() {
+    return this._userService.isLoggedIn();
   }
 
   checkIfUserIsMentor(user: IUser) {
