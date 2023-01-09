@@ -4,6 +4,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './modules/auth/components/login/login.component';
 import { RegisterComponent } from './modules/auth/components/register/register.component';
 import { ManageCoursesComponent } from './modules/courses/components/manage-courses/manage-courses.component';
+import { ViewCoursesComponent } from './modules/courses/components/view-courses/view-courses.component';
 import { HomeComponent } from './modules/home/components/home/home.component';
 
 const routes: Routes = [
@@ -22,6 +23,11 @@ const routes: Routes = [
   {
     path: 'manage-courses',
     component: ManageCoursesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'view-courses',
+    component: ViewCoursesComponent,
     canActivate: [AuthGuard]
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
