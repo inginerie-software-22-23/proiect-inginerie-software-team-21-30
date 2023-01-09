@@ -40,11 +40,12 @@ label{
 button{
     height: 40px;
     width: 200px;
+    font-size: 14px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border: 0;
     border-radius: 3px;
     font-weight: 700;
-    background-color: rgb(115, 146, 177);
+    background-color: #92c24c;
     cursor: pointer;
 }
 
@@ -55,5 +56,5 @@ button{
 .create-btn{
     margin-top: 20px;
     background-color: rgb(236, 236, 236);
-    border: 2px solid rgb(115, 146, 177);
+    border: 2px solid #92c24c;
 }
