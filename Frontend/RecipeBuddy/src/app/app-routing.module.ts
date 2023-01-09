@@ -17,15 +17,14 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent,
-    canActivate: [AuthGuard]
+    component: HomeComponent
   },
   {
     path: 'manage-courses',
     component: ManageCoursesComponent,
     canActivate: [AuthGuard]
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({
