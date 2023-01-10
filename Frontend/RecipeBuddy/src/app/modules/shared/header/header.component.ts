@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this._authService.setToken("");
+    this._authService.setToken();
     this.router.navigate(['/home']);
     this._userService.removeUser();
   }

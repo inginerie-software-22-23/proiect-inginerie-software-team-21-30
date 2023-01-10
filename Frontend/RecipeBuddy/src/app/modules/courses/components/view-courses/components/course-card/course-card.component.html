@@ -1,6 +1,6 @@
 <p-card [header]="(course && course.name) || 'Unknown'" styleClass="p-card-shadow">
     <ng-template pTemplate="header">
-        <p-button class="view-button" label="View" styleClass="p-button-secondary p-button-sm" (click)="selectCourse()"></p-button>
+        <p-button *ngIf="course && course.activeSubscription" class="view-button" label="View" styleClass="p-button-secondary p-button-sm" (click)="selectCourse()"></p-button>
         <img alt="Card" src="assets/images/course-card-header.png">
     </ng-template>
     <p>{{ (course && course.shortDescription) || 'No description found' }}</p>

@@ -19,9 +19,14 @@ export class AuthService {
         return this._http.post(Endpoints.LOGIN, payload);
     }
 
-    setToken(token: string) {
+    setToken(token?: string) {
         this.tokenValue.next(token);
-        localStorage.setItem("Token", token);
+
+        if (token) {
+            localStorage.setItem('Token', token);
+        } else {
+            localStorage.removeItem('Token');
+        }
     }
 
     refreshToken() {

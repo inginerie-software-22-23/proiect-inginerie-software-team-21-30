@@ -42,13 +42,14 @@ export class UserService {
 
     isLoggedIn() {
         const token = localStorage.getItem('Token');
+        const user = this.userValue.getValue();
         
-        if (token && !!this.userValue.getValue()) return true;
+        if (token && user && user.name) return true;
         return false;
     }
 
     removeUser() {
         this.userValue.next(null);
-        localStorage.setItem("User",'')
+        localStorage.removeItem('User');
     }
 }
