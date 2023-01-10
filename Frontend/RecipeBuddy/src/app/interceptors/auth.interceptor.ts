@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
            catchError((error) => {
                if(error instanceof HttpErrorResponse) {
                    if(error.status === 401 || error.status === 403) {
-                       localStorage.removeItem('access-token');
+                       localStorage.removeItem('Token');
                    }
                }
                throw new HttpErrorResponse(error);
