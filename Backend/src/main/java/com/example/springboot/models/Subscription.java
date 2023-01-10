@@ -29,6 +29,7 @@ public class Subscription {
     @JoinColumn(name = "course_id", nullable = false)
     @JsonBackReference(value = "course-subscriptions")
     private Course course;
+
     private String joinDate;
 
     public Subscription(User user, Course course) {

@@ -31,7 +31,7 @@ public class Course {
     @JsonBackReference(value = "course-user")
     private User user;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
     @JsonBackReference(value = "course-subscriptions")
     private Set<Subscription> subscriptions;
 
