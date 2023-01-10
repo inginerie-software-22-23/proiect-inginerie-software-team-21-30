@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { takeWhile } from 'rxjs';
+import { filter, take, takeWhile } from 'rxjs';
+import { IUser } from 'src/app/models/user.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   alive = true;
   token: string;
+  isMentor: boolean;
   constructor(private router: Router, private _authService: AuthService, private _userService: UserService) { }
 
   ngOnInit(): void {
@@ -21,6 +23,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(tkn => { this.token = tkn }
       );
+    this._userService.getUser()
+      .pipe(
+        takeWhile(() => this.alive
+        ),
+        filter(usr => !!usr)
+      ).subscribe((user: IUser) => this.checkIfUserIsMentor(user));
   }
 
   logout() {
@@ -31,6 +39,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isUserLoggedIn() {
     return this._userService.isLoggedIn();
+  }
+
+  checkIfUserIsMentor(user: IUser) {
+    this.isMentor = !!user.roles.filter(role => role.name === 'MENTOR').length;
   }
 
   ngOnDestroy(): void {

@@ -3,7 +3,7 @@
     <div class="links">
         <a [routerLink]="['home']" routerLinkActive="router-link-active">Home</a>
         <a [routerLink]="['view-courses']" routerLinkActive="router-link-active" >Courses</a>
-        <a [routerLink]="['manage-courses']" routerLinkActive="router-link-active" >Manage Courses</a>
+        <a [routerLink]="['manage-courses']" routerLinkActive="router-link-active"  *ngIf="isMentor">Manage Courses</a>
         <a *ngIf="!isUserLoggedIn()" [routerLink]="['login']" routerLinkActive="router-link-active" >Login</a>
         <a *ngIf="isUserLoggedIn()"
             (click)="logout()">Logout</a>
