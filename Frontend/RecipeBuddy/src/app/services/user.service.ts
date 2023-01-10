@@ -49,5 +49,6 @@ export class UserService {
 
     removeUser() {
         this.userValue.next(null);
+        localStorage.setItem("User",'')
     }
 }

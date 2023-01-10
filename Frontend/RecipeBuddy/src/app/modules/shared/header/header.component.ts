@@ -25,15 +25,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       );
     this._userService.getUser()
       .pipe(
-        takeWhile(() => this.alive
-        ),
-        filter(usr => !!usr)
+        takeWhile(() => this.alive)
       ).subscribe((user: IUser) => this.checkIfUserIsMentor(user));
+  }
+
+  navigateHome(){
+    this.router.navigate(["/home"]);
   }
 
   logout() {
     this._authService.setToken("");
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
     this._userService.removeUser();
   }
 
@@ -42,6 +44,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   checkIfUserIsMentor(user: IUser) {
+    if(!user){
+      this.isMentor = false;
+      return;
+    }
     this.isMentor = !!user.roles.filter(role => role.name === 'MENTOR').length;
   }
 
