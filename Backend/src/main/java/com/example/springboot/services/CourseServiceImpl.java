@@ -18,16 +18,15 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public Course findById(@PathVariable Long courseId) {
-        return courseRepository.findById(courseId)
-                .orElseThrow(()
-                        -> new NoSuchCourseExistsException("No course found with id = " + courseId));
+    public String create(Course course) {
+        courseRepository.save(course);
+        return "Course saved successfully";
     }
 
-    public List<Course> filterByName(@PathVariable String courseName) {
-        return courseRepository.findAll().stream().
-                filter(x -> x.getName().contains(courseName)).
-                collect(Collectors.toList());
+    public Course findById(@PathVariable Long id) {
+        return courseRepository.findById(id)
+                .orElseThrow(()
+                        -> new NoSuchCourseExistsException("No course found with id = " + id));
     }
 
     public List<Course> findAll() {
@@ -40,9 +39,10 @@ public class CourseServiceImpl implements CourseService {
                 collect(Collectors.toList());
     }
 
-    public String create(Course course) {
-        courseRepository.save(course);
-        return "Course saved successfully";
+    public List<Course> filterByName(@PathVariable String courseName) {
+        return courseRepository.findAll().stream().
+                filter(x -> x.getName().contains(courseName)).
+                collect(Collectors.toList());
     }
 
     public String update(Course course) {
@@ -56,14 +56,14 @@ public class CourseServiceImpl implements CourseService {
         return "Course updated successfully";
     }
 
-    public String delete(Long courseId) {
-        Optional<Course> courseToDelete = courseRepository.findById(courseId);
+    public String delete(Long id) {
+        Optional<Course> courseToDelete = courseRepository.findById(id);
 
         if (courseToDelete.isEmpty()) {
-            throw new NoSuchCourseExistsException("No course found with id = " + courseId);
+            throw new NoSuchCourseExistsException("No course found with id = " + id);
         }
 
-        courseRepository.deleteById(courseId);
+        courseRepository.deleteById(id);
         return "Course deleted successfully";
     }
 }

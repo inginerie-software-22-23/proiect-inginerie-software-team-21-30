@@ -20,8 +20,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.servlet.http.HttpServletResponse;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -48,12 +46,19 @@ public class WebSecurityConfig {
                 .antMatchers("/security/login").permitAll()
                 .antMatchers("/course/courses").permitAll()
                 .antMatchers("/course/courses/{courseName}").permitAll()
-                .antMatchers("/course/{courseId}").permitAll()
+                .antMatchers("/recipe/{recipeId}").permitAll()
+                .antMatchers("/recipe/recipes").permitAll()
+                .antMatchers("/recipe/recipes/{recipeName}").permitAll()
                 // Our private endpoints
+                .antMatchers("/course/{courseId}").permitAll()
                 .antMatchers("/course/courses/mentor/{username}").permitAll()
                 .antMatchers("/course/create/{mentorId}").permitAll()
                 .antMatchers("/course/update/{courseId}").permitAll()
                 .antMatchers("/course/delete/{courseId}").permitAll()
+                .antMatchers("/recipe/recipes/user/{username}").permitAll()
+                .antMatchers("/recipe/create/{userId}").permitAll()
+                .antMatchers("/recipe/update/{recipeId}").permitAll()
+                .antMatchers("/recipe/delete/{recipeId}").permitAll()
                 .antMatchers("/manage-courses/**").hasRole(String.valueOf(SecurityConstants.Role.MENTOR))
                 .antMatchers("/subscriptions/subscribe/{traineeId}/{courseId}").authenticated();
 

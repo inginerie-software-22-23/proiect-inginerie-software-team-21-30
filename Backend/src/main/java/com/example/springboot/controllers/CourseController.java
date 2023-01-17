@@ -24,6 +24,21 @@ public class CourseController {
     private UserServiceImpl userService;
 
     @CrossOrigin
+    @PostMapping(value = "/create/{mentorId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String create(@RequestBody Course course, @PathVariable Long mentorId) {
+        User mentor = userService.findById(mentorId);
+        course.setUser(mentor);
+        return courseService.create(course);
+    }
+
+    @CrossOrigin
+    @GetMapping("/{courseId}")
+    public CourseDTO findById(@PathVariable Long courseId) {
+        return new CourseDTO(courseService.findById(courseId));
+    }
+
+    @CrossOrigin
     @GetMapping("/courses")
     public List<CourseDTO> findAll() {
         List<Course> courses = courseService.findAll();
@@ -37,7 +52,9 @@ public class CourseController {
     @CrossOrigin
     @GetMapping("/courses/mentor/{username}")
     public List<CourseDTO> findCoursesByMentor(@PathVariable String username) {
-        List<Course> courses = courseService.findCoursesByMentor(username);
+        User user = userService.findByName(username);
+
+        List<Course> courses = courseService.findCoursesByMentor(user.getName());
         List<CourseDTO> coursesToReturn = courses.stream()
                 .sorted(Comparator.comparing(Course::getId))
                 .map(CourseDTO::new)
@@ -54,21 +71,6 @@ public class CourseController {
                 .map(CourseDTO::new)
                 .collect(Collectors.toList());
         return coursesToReturn;
-    }
-
-    @CrossOrigin
-    @GetMapping("/{courseId}")
-    public CourseDTO findById(@PathVariable Long courseId) {
-        return new CourseDTO(courseService.findById(courseId));
-    }
-
-    @CrossOrigin
-    @PostMapping(value = "/create/{mentorId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String create(@RequestBody Course course, @PathVariable Long mentorId) {
-        User mentor = userService.findById(mentorId);
-        course.setUser(mentor);
-        return courseService.create(course);
     }
 
     @CrossOrigin

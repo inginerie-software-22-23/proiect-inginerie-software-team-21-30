@@ -22,6 +22,7 @@ public class Course {
 
     private String shortDescription;
 
+    @Column(columnDefinition = "TEXT")
     private String longDescription;
 
     private String meetLink;

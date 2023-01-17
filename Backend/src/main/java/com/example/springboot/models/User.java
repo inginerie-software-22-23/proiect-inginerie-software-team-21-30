@@ -44,6 +44,10 @@ public class User implements Serializable {
     @JsonBackReference(value = "user-subscriptions")
     private Set<Subscription> subscriptions;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonBackReference(value = "recipe-user")
+    private Set<Recipe> recipes;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
