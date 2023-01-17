@@ -40,9 +40,16 @@ public class GlobalExceptionHandler {
     public @ResponseBody ErrorResponse handleException(NoSuchCourseExistsException ex) {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
+
     @ExceptionHandler(value = TraineeAlreadySubscribedToCourseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public @ResponseBody ErrorResponse handleException(TraineeAlreadySubscribedToCourseException ex) {
         return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(value = NoSuchRecipeExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponse handleException(NoSuchRecipeExistsException ex) {
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
 }
