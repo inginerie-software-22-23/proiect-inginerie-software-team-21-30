@@ -6,12 +6,9 @@ import com.example.springboot.models.Recipe;
 import com.example.springboot.models.User;
 import com.example.springboot.services.RecipeServiceImpl;
 import com.example.springboot.services.UserServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Comparator;
 import java.util.List;
@@ -25,19 +22,12 @@ public class RecipeController {
     @Autowired
     private UserServiceImpl userService;
 
-    @SneakyThrows
     @CrossOrigin
     @PostMapping(value = "/create/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@RequestParam("data") String data, @RequestParam(value = "image", required = false) MultipartFile image, @PathVariable Long userId) {
+    public String create(@RequestBody Recipe recipe, @PathVariable Long userId) {
         User user = userService.findById(userId);
-
-        ObjectMapper mapper = new ObjectMapper();
-        Recipe recipe = mapper.readValue(data, Recipe.class);
-
         recipe.setUser(user);
-        recipe.setImage(image.getBytes());
-
         return recipeService.create(recipe);
     }
 
@@ -82,20 +72,16 @@ public class RecipeController {
         return recipesToReturn;
     }
 
-    @SneakyThrows
     @CrossOrigin
     @PutMapping(value = "/update/{recipeId}")
-    public String update(@RequestParam("data") String newRecipeData, @RequestParam(value = "image", required = false) MultipartFile newRecipeImage, @PathVariable Long recipeId) {
+    public String update(@RequestBody Recipe newRecipeData, @PathVariable Long recipeId) {
         Recipe recipeToUpdate = recipeService.findById(recipeId);
 
-        ObjectMapper mapper = new ObjectMapper();
-        Recipe recipe = mapper.readValue(newRecipeData, Recipe.class);
-
-        recipeToUpdate.setName(recipe.getName());
-        recipeToUpdate.setImage(newRecipeImage.getBytes());
-        recipeToUpdate.setDescription(recipe.getDescription());
-        recipeToUpdate.setIngredients(recipe.getIngredients());
-        recipeToUpdate.setEstimatedPrepTimeInMinutes(recipe.getEstimatedPrepTimeInMinutes());
+        recipeToUpdate.setName(newRecipeData.getName());
+        recipeToUpdate.setImage(newRecipeData.getImage());
+        recipeToUpdate.setDescription(newRecipeData.getDescription());
+        recipeToUpdate.setIngredients(newRecipeData.getIngredients());
+        recipeToUpdate.setEstimatedPrepTimeInMinutes(newRecipeData.getEstimatedPrepTimeInMinutes());
 
         return recipeService.update(recipeToUpdate);
     }
