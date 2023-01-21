@@ -15,9 +15,9 @@ public class SubscriptionController {
     SubscriptionServiceImpl subscriptionService;
 
     @CrossOrigin
-    @PostMapping("/subscribe/{traineeId}/{courseId}")
-    public String subscribeTraineeToCourse(@PathVariable Long traineeId, @PathVariable Long courseId) {
-        return subscriptionService.subscribeTraineeToCourse(traineeId, courseId);
+    @PostMapping("/subscribe/{userId}/{courseId}")
+    public String subscribeUserToCourse(@PathVariable Long userId, @PathVariable Long courseId) {
+        return subscriptionService.subscribeUserToCourse(userId, courseId);
     }
 
     @CrossOrigin
@@ -36,8 +36,8 @@ public class SubscriptionController {
     }
 
     @CrossOrigin
-    @PostMapping("/unsubscribe/{traineeId}/{subscriptionId}")
-    public String unsubscribeTrainee(@PathVariable Long traineeId, @PathVariable Long subscriptionId) {
-        return subscriptionService.unsubscribeTraineeFromCourse(traineeId, subscriptionId);
+    @PostMapping("/unsubscribe/{userId}/{subscriptionId}")
+    public String unsubscribeUser(@PathVariable Long userId, @PathVariable Long subscriptionId) {
+        return subscriptionService.unsubscribeUserFromCourse(userId, subscriptionId);
     }
 }

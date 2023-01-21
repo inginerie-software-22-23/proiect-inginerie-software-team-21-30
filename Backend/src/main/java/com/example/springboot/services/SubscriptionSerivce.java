@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 public interface SubscriptionSerivce {
-    String subscribeTraineeToCourse(@PathVariable Long traineeId, @PathVariable Long courseId);
+    String subscribeUserToCourse(@PathVariable Long userId, @PathVariable Long courseId);
     List<Subscription> getSubscriptionsOfUser(String username);
     Subscription findById(Long id);
-    String unsubscribeTraineeFromCourse(Long traineeId, Long subscriptionId);
+    String unsubscribeUserFromCourse(Long userId, Long subscriptionId);
 }

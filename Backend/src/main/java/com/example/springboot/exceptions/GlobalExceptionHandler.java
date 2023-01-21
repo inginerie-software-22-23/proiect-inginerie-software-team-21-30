@@ -41,9 +41,9 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
 
-    @ExceptionHandler(value = TraineeAlreadySubscribedToCourseException.class)
+    @ExceptionHandler(value = UserAlreadySubscribedToCourseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse handleException(TraineeAlreadySubscribedToCourseException ex) {
+    public @ResponseBody ErrorResponse handleException(UserAlreadySubscribedToCourseException ex) {
         return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
     }
 
@@ -59,9 +59,9 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
 
-    @ExceptionHandler(value = TraineeNotSubscribedToCourseException.class)
+    @ExceptionHandler(value = UserNotSubscribedToCourseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse handleException(TraineeNotSubscribedToCourseException ex) {
+    public @ResponseBody ErrorResponse handleException(UserNotSubscribedToCourseException ex) {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
 }
