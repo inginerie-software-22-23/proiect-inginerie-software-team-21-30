@@ -60,7 +60,7 @@ public class WebSecurityConfig {
                 .antMatchers("/recipe/update/{recipeId}").permitAll()
                 .antMatchers("/recipe/delete/{recipeId}").permitAll()
                 .antMatchers("/manage-courses/**").hasRole(String.valueOf(SecurityConstants.Role.MENTOR))
-                .antMatchers("/subscriptions/subscribe/{traineeId}/{courseId}").authenticated();
+                .antMatchers("/subscriptions/**").authenticated();
 
         http.headers().frameOptions().sameOrigin();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
