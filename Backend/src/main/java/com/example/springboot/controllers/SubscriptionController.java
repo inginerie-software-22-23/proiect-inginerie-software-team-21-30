@@ -28,4 +28,11 @@ public class SubscriptionController {
                 .map(SubscriptionWithCourseDTO::new)
                 .collect(Collectors.toList());
     }
+
+    @CrossOrigin
+    @GetMapping("/{subscriptionId}")
+    public SubscriptionWithCourseDTO findById(@PathVariable Long subscriptionId) {
+        return new SubscriptionWithCourseDTO(subscriptionService.findById(subscriptionId));
+    }
+
 }

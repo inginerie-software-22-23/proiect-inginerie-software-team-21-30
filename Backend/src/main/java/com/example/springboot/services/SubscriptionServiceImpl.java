@@ -1,6 +1,7 @@
 package com.example.springboot.services;
 
 import com.example.springboot.exceptions.NoSuchCourseExistsException;
+import com.example.springboot.exceptions.NoSuchSubscriptionExists;
 import com.example.springboot.exceptions.NoSuchUserExistsException;
 import com.example.springboot.exceptions.TraineeAlreadySubscribedToCourseException;
 import com.example.springboot.models.Course;
@@ -58,6 +59,12 @@ public class SubscriptionServiceImpl implements SubscriptionSerivce {
         return subscriptionsRepository.findAll().stream()
                 .filter(x -> x.getUser().getName().equals(username))
                 .collect(Collectors.toList());
+    }
+
+    public Subscription findById(Long id) {
+        return subscriptionsRepository.findById(id)
+                .orElseThrow(()
+                        -> new NoSuchSubscriptionExists("No subscription found with id = " + id));
     }
 
 }
