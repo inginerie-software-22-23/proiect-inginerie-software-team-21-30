@@ -10,9 +10,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class CourseCardComponent implements OnInit, OnDestroy, OnChanges {
 
+  @Input() isSubscriptionCard = false;
   @Input() course: ICourse;
   @Output() onSelectCourse = new EventEmitter<ICourse>();
   @Output() onSubscribeToCourse = new EventEmitter<number>();
+  @Output() onUnsubscribeFromCourse = new EventEmitter<number>();
 
   alive: boolean;
 
@@ -35,6 +37,12 @@ export class CourseCardComponent implements OnInit, OnDestroy, OnChanges {
   subscribeToCourse() {
     if (this.course && this.course.id) {
       this.onSubscribeToCourse.emit(this.course.id);
+    }
+  }
+
+  unsubscribeFromCourse() {
+    if (this.course && this.course.subscriptionId) {
+      this.onUnsubscribeFromCourse.emit(this.course.subscriptionId);
     }
   }
 

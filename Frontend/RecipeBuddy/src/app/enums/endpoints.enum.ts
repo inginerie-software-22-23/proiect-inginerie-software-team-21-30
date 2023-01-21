@@ -4,5 +4,7 @@ export enum Endpoints {
     COURSES = '/api/course/courses',
     COURSE = '/api/course',
     USER = '/api/user',
-    SUBSCRIBE = '/api/subscriptions/subscribe'
+    SUBSCRIBE = '/api/subscriptions/subscribe',
+    UNSUBSCRIBE = '/api/subscriptions/unsubscribe',
+    SUBSCRIPTIONS = '/api/subscriptions/all'
 }

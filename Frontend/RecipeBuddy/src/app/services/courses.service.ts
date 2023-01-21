@@ -22,6 +22,10 @@ export class CoursesService {
         return this._http.get(Endpoints.COURSES + `${name ? '/' + name : ''}`);
     }
 
+    getSubscriptions(name: string) {
+        return this._http.get(Endpoints.SUBSCRIPTIONS + `/${name}`);
+    }
+
     delete(id: number) {
         return this._http.delete(Endpoints.COURSE + `/delete/${id}`, { responseType: 'text' });
     }
@@ -34,7 +38,11 @@ export class CoursesService {
         return this._http.post(Endpoints.COURSE + `/create/${userId}`, course, { responseType: 'text' });
     }
 
-    subscribe(traineeId: number, courseId: number) {
-        return this._http.post(Endpoints.SUBSCRIBE + `/${traineeId}/${courseId}`, null, { responseType: 'text' });
+    subscribe(userId: number, courseId: number) {
+        return this._http.post(Endpoints.SUBSCRIBE + `/${userId}/${courseId}`, null, { responseType: 'text' });
+    }
+
+    unsubscribe(userId: number, subscriptionId: number) {
+        return this._http.post(Endpoints.UNSUBSCRIBE + `/${userId}/${subscriptionId}`, null, { responseType: 'text' });
     }
 }

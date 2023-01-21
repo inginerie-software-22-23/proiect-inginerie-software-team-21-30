@@ -1,0 +1,12 @@
+<p-card [header]="(course && course.name) || 'Unknown'" styleClass="p-card-shadow">
+    <ng-template pTemplate="header">
+        <p-button *ngIf="isSubscriptionCard" class="view-button" label="View" styleClass="p-button-secondary p-button-sm" (click)="selectCourse()"></p-button>
+        <img alt="Card" [src]="'assets/images/' + (isSubscriptionCard ? 'subscription' : 'course') + '-card-header.png'">
+    </ng-template>
+    <p>{{ (course && course.shortDescription) || 'No description found' }}</p>
+    <ng-template pTemplate="footer">
+        <p-button *ngIf="!isSubscriptionCard && course && !(course.activeSubscription)" label="Subscribe" [disabled]="!isUserLoggedIn()" (click)="subscribeToCourse()"></p-button>
+        <p-button *ngIf="!isSubscriptionCard && course && course.activeSubscription" [disabled]="true" label="Subscribed"></p-button>
+        <p-button *ngIf="isSubscriptionCard" (click)="unsubscribeFromCourse()">Unsubscribe</p-button>
+    </ng-template>
+</p-card>

@@ -9,5 +9,7 @@ export interface ICourse {
     mentor?: IUser[];
     subscriptions?;
     activeSubscription?: boolean;
+    subscriptionId?: number;
+    subscriptionJoinDate?: string;
 }
 

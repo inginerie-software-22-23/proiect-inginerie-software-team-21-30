@@ -1,0 +1,24 @@
+<div class="view-courses-page">
+    <div class="view-courses-background-image">
+        <h1>Recipe Buddy</h1>
+    </div>
+    <div class="container view-courses-subtitle">
+        <h1>Current subscriptions</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div *ngFor="let subscription of (subscriptions | async)"
+                class="col-sm-4 col-md-3 my-3">
+                <app-course-card [isSubscriptionCard]="true"
+                                [course]="subscription"
+                                (onSelectCourse)="selectSubscription($event)"
+                                (onUnsubscribeFromCourse)="unsubscribeFromCourse($event)">
+                </app-course-card>
+            </div>
+        </div>
+    </div>
+</div>
+<course-dialog [visible]="isDialogVisible | async"
+                [course]="selectedSubscription | async"
+                (onCloseDialog)="onDialogClose()">
+</course-dialog>

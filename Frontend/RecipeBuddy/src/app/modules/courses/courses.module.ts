@@ -9,17 +9,16 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CoursesDialogComponent } from './components/manage-courses/components/courses-dialog/courses-dialog.component';
 import { ViewCoursesComponent } from './components/view-courses/view-courses.component';
-import { CourseDialogComponent } from './components/view-courses/components/course-dialog/course-dialog.component';
-import { CourseCardComponent } from './components/view-courses/components/course-card/course-card.component';
 import { CardModule } from 'primeng/card';
+import { SharedModule } from '../shared/shared.module';
+import { ViewSubscriptionsComponent } from './components/view-subscriptions/view-subscriptions.component';
 
 @NgModule({
   declarations: [
     ManageCoursesComponent,
     CoursesDialogComponent,
     ViewCoursesComponent,
-    CourseDialogComponent,
-    CourseCardComponent
+    ViewSubscriptionsComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +28,8 @@ import { CardModule } from 'primeng/card';
     ReactiveFormsModule,
     InputTextModule,
     InputTextareaModule,
-    CardModule
+    CardModule,
+    SharedModule
   ],
   exports: [
     ManageCoursesComponent
