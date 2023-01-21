@@ -9,4 +9,5 @@ public interface SubscriptionSerivce {
     String subscribeTraineeToCourse(@PathVariable Long traineeId, @PathVariable Long courseId);
     List<Subscription> getSubscriptionsOfUser(String username);
     Subscription findById(Long id);
+    String unsubscribeTraineeFromCourse(Long traineeId, Long subscriptionId);
 }

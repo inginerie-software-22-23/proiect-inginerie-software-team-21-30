@@ -1,9 +1,6 @@
 package com.example.springboot.services;
 
-import com.example.springboot.exceptions.NoSuchCourseExistsException;
-import com.example.springboot.exceptions.NoSuchSubscriptionExists;
-import com.example.springboot.exceptions.NoSuchUserExistsException;
-import com.example.springboot.exceptions.TraineeAlreadySubscribedToCourseException;
+import com.example.springboot.exceptions.*;
 import com.example.springboot.models.Course;
 import com.example.springboot.models.Subscription;
 import com.example.springboot.models.User;
@@ -65,6 +62,33 @@ public class SubscriptionServiceImpl implements SubscriptionSerivce {
         return subscriptionsRepository.findById(id)
                 .orElseThrow(()
                         -> new NoSuchSubscriptionExists("No subscription found with id = " + id));
+    }
+
+    public String unsubscribeTraineeFromCourse(Long traineeId, Long subscriptionId) {
+        Optional<User> trainee = userRepository.findById(traineeId);
+        Optional<Subscription> subscription = subscriptionsRepository.findById(subscriptionId);
+
+        if (trainee.isEmpty()) {
+            throw new NoSuchUserExistsException("User with id " + traineeId + " not found");
+        }
+
+        if (subscription.isEmpty()) {
+            throw new NoSuchSubscriptionExists("Subscription with id: " + subscriptionId + " not found");
+        }
+
+        if (!trainee.get().getSubscriptions().contains(subscription.get())) {
+            throw new TraineeNotSubscribedToCourseException(
+                    "Trainee with id " + traineeId + " does not have subscription with id " + subscriptionId +
+                            " to course with id " + subscription.get().getCourse().getId());
+        } else {
+            trainee.get().getSubscriptions()
+                    .removeIf(sub -> sub.getId().equals(subscription.get().getId()));
+
+            userRepository.save(trainee.get());
+            subscriptionsRepository.delete(subscription.get());
+
+            return "Trainee unsubscribed successfully";
+        }
     }
 
 }

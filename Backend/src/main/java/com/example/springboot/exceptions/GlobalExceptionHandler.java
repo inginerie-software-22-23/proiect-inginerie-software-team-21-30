@@ -58,4 +58,10 @@ public class GlobalExceptionHandler {
     public @ResponseBody ErrorResponse handleException(NoSuchSubscriptionExists ex) {
         return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
     }
+
+    @ExceptionHandler(value = TraineeNotSubscribedToCourseException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponse handleException(TraineeNotSubscribedToCourseException ex) {
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+    }
 }

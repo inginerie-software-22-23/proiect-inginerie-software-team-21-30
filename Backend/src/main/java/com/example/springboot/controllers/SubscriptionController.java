@@ -21,7 +21,7 @@ public class SubscriptionController {
     }
 
     @CrossOrigin
-    @PostMapping("/all/{username}")
+    @GetMapping("/all/{username}")
     public List<SubscriptionWithCourseDTO> getSubscriptionsOfUser(@PathVariable String username) {
         return subscriptionService.getSubscriptionsOfUser(username)
                 .stream()
@@ -35,4 +35,9 @@ public class SubscriptionController {
         return new SubscriptionWithCourseDTO(subscriptionService.findById(subscriptionId));
     }
 
+    @CrossOrigin
+    @PostMapping("/unsubscribe/{traineeId}/{subscriptionId}")
+    public String unsubscribeTrainee(@PathVariable Long traineeId, @PathVariable Long subscriptionId) {
+        return subscriptionService.unsubscribeTraineeFromCourse(traineeId, subscriptionId);
+    }
 }
