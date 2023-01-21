@@ -12,7 +12,9 @@ import com.example.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionSerivce {
@@ -51,4 +53,11 @@ public class SubscriptionServiceImpl implements SubscriptionSerivce {
             return "Trainee subscribed to course successfully";
         }
     }
+
+    public List<Subscription> getSubscriptionsOfUser(String username) {
+        return subscriptionsRepository.findAll().stream()
+                .filter(x -> x.getUser().getName().equals(username))
+                .collect(Collectors.toList());
+    }
+
 }
