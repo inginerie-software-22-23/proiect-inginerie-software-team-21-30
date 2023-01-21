@@ -24,7 +24,6 @@ public class Subscription {
     @JsonBackReference(value = "user-subscriptions")
     private User user;
 
-
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     @JsonBackReference(value = "course-subscriptions")
