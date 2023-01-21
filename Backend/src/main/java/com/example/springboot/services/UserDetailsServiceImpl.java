@@ -1,11 +1,9 @@
 package com.example.springboot.services;
 
-import java.util.ArrayList;
-
 import com.example.springboot.models.User;
+import com.example.springboot.models.UserDetailsImpl;
 import com.example.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,12 +18,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private PasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByName(username)
                 .orElseThrow(()
                         -> new UsernameNotFoundException("User not found with username: " + username));
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getName(), user.getPassword(), new ArrayList<>());
+        return new UserDetailsImpl(user);
     }
 }

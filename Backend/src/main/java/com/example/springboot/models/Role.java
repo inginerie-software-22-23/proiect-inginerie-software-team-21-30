@@ -1,6 +1,6 @@
 package com.example.springboot.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +22,6 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    @JsonIgnore
+    @JsonBackReference(value = "role-user")
     private Collection<User> users;
 }
