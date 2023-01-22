@@ -1,0 +1,25 @@
+.recipe-name {
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2em;
+    padding: 1em 0 0.5em 0;
+    border-bottom: 1px solid #4caf50;
+    font-weight: 800;
+    color: #000;
+}
+
+.recipe-text {
+    padding: 0 1em;
+    margin: 0 0 0.5em 0;
+    font-weight: 300;
+
+    span {
+        color: #4caf50;
+        font-weight: bold;
+    }
+}
+
+::ng-deep .p-button > .p-button-text {
+    color: red !important;
+}

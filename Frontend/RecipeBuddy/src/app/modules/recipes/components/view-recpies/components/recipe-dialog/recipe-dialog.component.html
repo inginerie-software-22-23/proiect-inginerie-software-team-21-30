@@ -1,0 +1,17 @@
+<p-dialog   [(visible)]="visible"
+            [modal]="true"
+            [closable]="false"
+            (onHide)="hideDialog()"
+            [style]="{ width: '80vw', minHeight:'60vh' }">
+    <ng-template pTemplate="header">
+        <h1 class="recipe-name">{{ (recipe && recipe.name) || 'No recipe name found' }}</h1>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <p class="recipe-text"><span>Description: </span> {{ (recipe && recipe.description) || 'No description found' }}</p>
+        <p class="recipe-text"><span>Ingredients: </span> {{ (recipe && recipe.ingredients) || 'No igredients found' }} </p>
+        <p class="recipe-text"><span>Estimated preparation time: </span> {{ (recipe && recipe.estimatedPrepTimeInMinutes) || 'No preparation time found found' }} <i *ngIf="recipe.estimatedPrepTimeInMinutes" class="pi pi-clock"></i></p>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="hideDialog()" label="Close" styleClass="p-button-danger p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

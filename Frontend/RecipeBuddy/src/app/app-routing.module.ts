@@ -8,6 +8,7 @@ import { ManageCoursesComponent } from './modules/courses/components/manage-cour
 import { ViewCoursesComponent } from './modules/courses/components/view-courses/view-courses.component';
 import { ViewSubscriptionsComponent } from './modules/courses/components/view-subscriptions/view-subscriptions.component';
 import { HomeComponent } from './modules/home/components/home/home.component';
+import { ViewRecipesComponent } from './modules/recipes/components/view-recpies/view-recipes.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
     path: 'view-subscriptions',
     component: ViewSubscriptionsComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'recipes',
+    component: ViewRecipesComponent
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];

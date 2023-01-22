@@ -1,0 +1,30 @@
+<p-card [header]="(recipe && recipe.name) || 'Unknown'"
+        styleClass="p-card-shadow">
+    <ng-template pTemplate="header">
+        <p-button *ngIf="!(selectedMode | async)"
+                  class="view-button"
+                  label="View"
+                  styleClass="p-button-secondary p-button-sm"
+                  (click)="selectRecipe()"></p-button>
+        <div *ngIf="(selectedMode | async)"
+             class="manage-buttons">
+            <p-button class="manage-button"
+                      icon="pi pi-pencil"
+                      styleClass="p-button-primary p-button"
+                      (click)="selectRecipe()"></p-button>
+            <p-button class="manage-button"
+                      icon="pi pi-times"
+                      styleClass="p-button-danger p-button"
+                      (click)="deleteRecipe()"></p-button>
+        </div>
+        <img alt="Card"
+             class="card-image"
+             [src]="getRecipeImage()">
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="estimated-time d-flex justify-content-end">
+            <p>Time: {{ (recipe && recipe.estimatedPrepTimeInMinutes) || 'No prep time found' }} <i
+                   class=" pi pi-clock"></i></p>
+        </div>
+    </ng-template>
+</p-card>

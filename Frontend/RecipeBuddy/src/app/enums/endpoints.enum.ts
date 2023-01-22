@@ -6,5 +6,6 @@ export enum Endpoints {
     USER = '/api/user',
     SUBSCRIBE = '/api/subscriptions/subscribe',
     UNSUBSCRIBE = '/api/subscriptions/unsubscribe',
-    SUBSCRIPTIONS = '/api/subscriptions/all'
+    SUBSCRIPTIONS = '/api/subscriptions/all',
+    RECIPES = '/api/recipe'
 }

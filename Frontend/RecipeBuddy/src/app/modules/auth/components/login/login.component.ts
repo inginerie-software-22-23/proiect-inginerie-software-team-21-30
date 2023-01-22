@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   handleLoginError(error): Observable<any> {
     const errorMessage = (error?.error?.message) || 'There was an error on the server.';
-    this._notificationsService.createMessage(NotificationType.ERROR, 'Register', errorMessage);
+    this._notificationsService.createMessage(NotificationType.ERROR, 'Login', errorMessage);
     return of(null);
   }
 

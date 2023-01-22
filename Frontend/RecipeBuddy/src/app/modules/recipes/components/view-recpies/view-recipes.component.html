@@ -1,0 +1,66 @@
+<div class="view-recipes-page">
+    <div class="view-recipes-background-image">
+        <h1>Recipe Buddy</h1>
+        <div class="switch-mode">
+            <button *ngIf="this.user"
+                    pButton
+                    pRipple
+                    type="button"
+                    [label]="!(isManageMode | async) ? 'Manage your recipes' : 'View all recipes'"
+                    class="p-button-secondary"
+                    (click)="switchManageMode()"></button>
+        </div>
+    </div>
+    <div *ngIf="!(isManageMode | async)"
+         class="view-recipes">
+        <div class="container view-recipes-subtitle">
+            <h1>Available recipes</h1>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div *ngFor="let recipe of allRecipes"
+                     class="col-sm-4 col-md-3 my-3">
+                    <app-recipe-card [recipe]="recipe"
+                                     (onSelectRecipe)="selectRecipe($event)">
+                    </app-recipe-card>
+                </div>
+            </div>
+        </div>
+        <recipe-dialog [visible]="isDialogVisible | async"
+                       [recipe]="selectedRecipe | async"
+                       (onCloseDialog)="onDialogClose()">
+        </recipe-dialog>
+    </div>
+    <div *ngIf="(isManageMode | async)"
+         class="manage-recipes">
+        <div class="container view-recipes-subtitle">
+            <h1>Your recipes</h1>
+        </div>
+        <button pButton
+                pRipple
+                type="button"
+                icon="pi pi-plus"
+                label="Add recipe"
+                class="p-button-primary add-recipes-button"
+                (click)="addRecipe()"></button>
+        <div class="container pt-4">
+            <div class="row">
+                <div *ngFor="let recipe of yourRecipes"
+                     class="col-sm-4 col-md-3 my-3">
+                    <app-recipe-card [recipe]="recipe"
+                                     [mode]="'manage'"
+                                     (onRefreshRecipes)="refreshRecipes($event)"
+                                     (onSelectRecipe)="selectRecipe($event)">
+                    </app-recipe-card>
+                </div>
+            </div>
+        </div>
+
+        <app-recipe-manage [visible]="!!(selectedRecipe | async) || (selectedMode | async) === 'add'"
+                           [recipe]="(selectedRecipe | async)"
+                           [mode]="(selectedMode | async)"
+                           [user]="user"
+                           (dialogClosed)="onDialogClose($event)">
+        </app-recipe-manage>
+    </div>
+</div>
