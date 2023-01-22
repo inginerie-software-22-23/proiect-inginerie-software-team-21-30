@@ -4,7 +4,7 @@
         <img alt="Card" [src]="'assets/images/' + (isSubscriptionCard ? 'subscription' : 'course') + '-card-header.png'">
     </ng-template>
     <p>Description: {{ (course && course.shortDescription) || 'No description found' }}</p>
-    <p>Mentor: {{ (course && course?.mentor?.name) || 'No mentor found' }}</p>
+    <p>Mentor: {{ (course && course?.mentor) || 'No mentor found' }}</p>
 
     <ng-template pTemplate="footer">
         <p-button *ngIf="!isSubscriptionCard && course && !(course.activeSubscription)" label="Subscribe" [disabled]="!isUserLoggedIn()" (click)="subscribeToCourse()"></p-button>
