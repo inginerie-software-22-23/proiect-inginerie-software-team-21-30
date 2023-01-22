@@ -7,5 +7,6 @@ export interface IRecipe {
     ingredients?: string;
     estimatedPrepTimeInMinutes?: number;
     image?: string;
+    author: IUser;
 }
 

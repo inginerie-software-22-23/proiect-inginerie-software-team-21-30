@@ -55,7 +55,6 @@
                 </div>
             </div>
         </div>
-
         <app-recipe-manage [visible]="!!(selectedRecipe | async) || (selectedMode | async) === 'add'"
                            [recipe]="(selectedRecipe | async)"
                            [mode]="(selectedMode | async)"

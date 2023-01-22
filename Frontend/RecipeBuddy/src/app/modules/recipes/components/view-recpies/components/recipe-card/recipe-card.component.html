@@ -21,6 +21,7 @@
              class="card-image"
              [src]="getRecipeImage()">
     </ng-template>
+    <p>Author: {{ (recipe && recipe?.author?.name) || 'No author found' }}</p>
     <ng-template pTemplate="footer">
         <div class="estimated-time d-flex justify-content-end">
             <p>Time: {{ (recipe && recipe.estimatedPrepTimeInMinutes) || 'No prep time found' }} <i
