@@ -1,0 +1,72 @@
+<p-dialog header="Recipe"
+          [(visible)]="visible"
+          [modal]="true"
+          (onHide)="hideDialog('')"
+          [style]="{width: '61vw',
+        height:'60vh'}">
+    <ng-template pTemplate="content">
+        <form class="form pt-5 d-flex flex-column justify-content-evenly h-100 form-wrapper align-items-center"
+              [formGroup]="recipesForm">
+            <div class="form-row">
+                <span class="p-float-label">
+                    <input id="float-input"
+                           type="text"
+                           formControlName="name"
+                           autocomplete="off"
+                           pInputText>
+                    <label for="float-input">Name</label>
+                </span>
+            </div>
+            <div class="form-row">
+                <span class="p-float-label">
+                    <textarea id="float-input"
+                              rows="5"
+                              cols="51"
+                              formControlName="description"
+                              autocomplete="off"
+                              pInputTextarea
+                              style="resize: none;"></textarea>
+                    <label for="float-input">Description</label>
+                </span>
+            </div>
+            <div class="form-row">
+                <span class="p-float-label">
+                    <input id="float-input"
+                           type="text"
+                           formControlName="ingredients"
+                           autocomplete="off"
+                           pInputText>
+                    <label for="float-input">Ingredients</label>
+                </span>
+            </div>
+            <div class="form-row">
+                <span class="p-float-label">
+                    <input id="float-input"
+                           type="number"
+                           formControlName="estimatedPrepTimeInMinutes"
+                           autocomplete="off"
+                           pInputText>
+                    <label for="float-input">Estimated preparation time</label>
+                </span>
+            </div>
+            <div *ngIf="mode === 'add'"
+                 class="form-row">
+                <label for="float-input"
+                       class="d-block mb-1">Image:</label>
+                <input id="float-input"
+                       type="file"
+                       (change)="handleImageUpload($event)"
+                       autocomplete="off"
+                       pInputText>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button *ngIf="mode !== 'view'"
+                  icon="pi pi-check"
+                  (click)="saveCourse()"
+                  [disabled]="!recipesForm.valid"
+                  [label]="mode === 'edit' ? 'Save':'Add'"
+                  styleClass="btn btn-success"></p-button>
+    </ng-template>
+</p-dialog>

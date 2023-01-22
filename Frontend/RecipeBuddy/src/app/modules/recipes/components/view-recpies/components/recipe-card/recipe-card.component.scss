@@ -1,0 +1,53 @@
+::ng-deep .p-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+::ng-deep .p-card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+::ng-deep .p-card-content {
+    padding: 0 !important;
+}
+
+::ng-deep .p-card-footer {
+    margin-top: auto;
+    padding: 0 !important;
+}
+
+::ng-deep .p-card-header {
+    position: relative;
+}
+
+.estimated-time {
+    p {
+        margin: 0;
+    }
+}
+
+.view-button {
+    position: absolute;
+    right: 0.3rem;
+    top: 0.3rem;
+}
+
+.manage-buttons {
+    position: absolute;
+    top: 0.3rem;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding-right: 0.4rem;
+    .manage-button {
+    margin-left: 0.4rem;
+    }
+}
+
+.card-image{
+    height: 25vh;
+}

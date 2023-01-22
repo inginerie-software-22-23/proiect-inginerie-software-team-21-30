@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { MentorGuard } from './guards/mentor.guard';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { RecipesModule } from './modules/recipes/recipe.module';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ButtonModule,
     RippleModule,
     RadioButtonModule,
-    FormsModule
+    FormsModule,
+    RecipesModule
   ],
   providers: [
     AuthGuard,
