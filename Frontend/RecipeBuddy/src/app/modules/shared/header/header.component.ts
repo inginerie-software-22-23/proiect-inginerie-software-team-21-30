@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isMentor = false;
       return;
     }
-    this.isMentor = !!user.roles.filter(role => role.name === 'MENTOR').length;
+    this.isMentor = !!user.roles.filter(role => role.name === 'ROLE_MENTOR').length;
   }
 
   ngOnDestroy(): void {

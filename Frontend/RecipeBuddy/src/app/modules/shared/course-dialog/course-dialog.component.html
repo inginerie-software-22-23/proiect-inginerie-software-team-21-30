@@ -8,9 +8,9 @@
     </ng-template>
     <ng-template pTemplate="content">
         <p class="course-text"><span>Description: </span> {{ (course && course.longDescription) || 'No description found' }}</p>
-        <p class="course-text"><span>Link meet: </span> {{ (course && course.meetLink) || 'No meet link found' }} </p>
-        <p class="course-text"><span>Mentor: </span> {{ (course && course.mentor && course.mentor.name) || 'No mentor found' }} </p>
-        <p class="course-text"><span>Total subscriptions: </span> {{ (course && course.subscriptions && course.subscriptions.length) || 'None' }} </p>
+        <p class="course-text"><span>Meet Link: </span> {{ (course && course.meetLink) || 'No meet link found' }} </p>
+        <p class="course-text"><span>Mentor: </span> {{ (course && course.mentor) || 'No mentor found' }} </p>
+        <p class="course-text"><span>Total Subscriptions: </span> {{ (course && course.subscriptions && course.subscriptions.length) || 'None' }} </p>
     </ng-template>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" (click)="hideDialog()" label="Ok" styleClass="p-button-text"></p-button>

@@ -30,8 +30,8 @@ export class RecipeManageComponent implements OnInit, OnDestroy, OnChanges {
       id: new FormControl(null),
       name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       image: new FormControl(null, [Validators.required]),
-      description: new FormControl(null, [Validators.required, Validators.maxLength(300)]),
-      ingredients: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+      description: new FormControl(null, [Validators.required, Validators.maxLength(10000)]),
+      ingredients: new FormControl(null, [Validators.required, Validators.maxLength(10000)]),
       estimatedPrepTimeInMinutes: new FormControl(null, [Validators.required]),
     });
   }

@@ -55,11 +55,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       const payload = this.registerForm.getRawValue();
       if (payload.isMentor) {
         payload['roles'] = [{
-          name: "MENTOR"
+          name: "ROLE_MENTOR"
         }];
       } else {
         payload['roles'] = [{
-          name: "TRAINEE"
+          name: "ROLE_TRAINEE"
         }];
       }
       delete payload.isMentor;

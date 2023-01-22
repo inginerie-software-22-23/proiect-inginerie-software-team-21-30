@@ -28,7 +28,7 @@ export class CoursesDialogComponent implements OnInit, OnDestroy, OnChanges {
       id: new FormControl(null),
       name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       shortDescription: new FormControl(null, [Validators.required, Validators.maxLength(70)]),
-      longDescription: new FormControl(null, [Validators.required, Validators.maxLength(300)]),
+      longDescription: new FormControl(null, [Validators.required, Validators.maxLength(10000)]),
       meetLink: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       subscriptions: new FormControl(null),
     });

@@ -9,7 +9,7 @@
     <ng-template pTemplate="content">
         <p class="recipe-text"><span>Description: </span> {{ (recipe && recipe.description) || 'No description found' }}</p>
         <p class="recipe-text"><span>Ingredients: </span> {{ (recipe && recipe.ingredients) || 'No igredients found' }} </p>
-        <p class="recipe-text"><span>Estimated preparation time: </span> {{ (recipe && recipe.estimatedPrepTimeInMinutes) || 'No preparation time found found' }} <i *ngIf="recipe.estimatedPrepTimeInMinutes" class="pi pi-clock"></i></p>
+        <p class="recipe-text"><span>Estimated Preparation Time: </span> {{ (recipe && recipe.estimatedPrepTimeInMinutes) || 'No preparation time found found' }} <i *ngIf="recipe.estimatedPrepTimeInMinutes" class="pi pi-clock"></i></p>
     </ng-template>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" (click)="hideDialog()" label="Close" styleClass="p-button-danger p-button-text"></p-button>
