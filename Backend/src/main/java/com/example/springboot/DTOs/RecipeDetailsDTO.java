@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class RecipeDetailsDTO {
     private Long id;
-    private UserDTO author;
+    private String author;
     private String name;
     private byte[] image;
     private String description;
@@ -15,7 +15,7 @@ public class RecipeDetailsDTO {
 
     public RecipeDetailsDTO(Recipe recipe) {
         this.id = recipe.getId();
-        this.author = new UserDTO(recipe.getUser());
+        this.author = recipe.getUser().getName();
         this.name = recipe.getName();
         this.image = recipe.getImage();
         this.description = recipe.getDescription();

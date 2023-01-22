@@ -13,7 +13,7 @@ public class CourseDTO {
     private String shortDescription;
     private String longDescription;
     private String meetLink;
-    private UserDTO mentor;
+    private String mentor;
     private Collection<SubscriptionWithUserDTO> subscriptions;
 
     public CourseDTO(Course course) {
@@ -22,7 +22,7 @@ public class CourseDTO {
         this.shortDescription = course.getShortDescription();
         this.longDescription = course.getLongDescription();
         this.meetLink = course.getMeetLink();
-        this.mentor = new UserDTO(course.getUser());
+        this.mentor = course.getUser().getName();
         this.subscriptions = course.getSubscriptions()
                 .stream()
                 .map(SubscriptionWithUserDTO::new)
