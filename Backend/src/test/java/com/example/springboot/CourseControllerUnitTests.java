@@ -152,8 +152,6 @@ public class CourseControllerUnitTests {
 
     @Test
     public void givenNotAuthenticated_whenGetCourseById_thenReturn403() throws Exception {
-        given(courseService.findById(anyLong())).willReturn(course1);
-
         mvc.perform(get("/course/" + course1.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
@@ -215,9 +213,6 @@ public class CourseControllerUnitTests {
     }
     @Test
     public void givenNotAuthenticated_whenGetCoursesOfMentor_thenReturnJsonArray() throws Exception {
-        given(userService.findByName(anyString())).willReturn(mentor);
-        given(courseService.findCoursesByMentor(anyString())).willReturn(courseList);
-
         mvc.perform(get("/course/courses/mentor/ " + mentor.getName())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
@@ -238,8 +233,6 @@ public class CourseControllerUnitTests {
 
     @Test
     public void givenNotAuthenticated_whenGetCoursesFilteredByName_thenIsOk() throws Exception {
-        given(courseService.filterByName(anyString())).willReturn(Collections.singletonList(course1));
-
         mvc.perform(get("/course/courses/ " + anyString())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -248,19 +241,13 @@ public class CourseControllerUnitTests {
     @Test
     @WithMockUser(roles = {"MENTOR", "TRAINEE"})
     public void givenMentorAndCourse_whenUpdateCourse_thenReturnStatusOk() throws Exception {
-        Course newCourseData = new Course();
-        newCourseData.setName("newName");
-        newCourseData.setLongDescription("newLong");
-        newCourseData.setShortDescription("newShort");
-        newCourseData.setMeetLink("newMeetLink");
-
         given(courseService.update(ArgumentMatchers.any(Course.class), anyLong())).willReturn("Course updated succesfully");
 
         Map<String, String> body = new HashMap<>();
-        body.put("name", newCourseData.getName());
-        body.put("longDescription", newCourseData.getLongDescription());
-        body.put("shortDescription", newCourseData.getShortDescription());
-        body.put("meetLink", newCourseData.getMeetLink());
+        body.put("name", "newName");
+        body.put("longDescription", "newLong");
+        body.put("shortDescription", "newShort");
+        body.put("meetLink", "newLink");
 
         mvc.perform(put("/course/update/" + course1.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -270,9 +257,6 @@ public class CourseControllerUnitTests {
 
     @Test
     public void givenNotAuthenticated_whenUpdateCourse_thenReturnStatusForbidden() throws Exception {
-        given(userService.findByName(anyString())).willReturn(mentor);
-        given(courseService.findCoursesByMentor(anyString())).willReturn(courseList);
-
         mvc.perform(put("/courses/update/" + course1.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
