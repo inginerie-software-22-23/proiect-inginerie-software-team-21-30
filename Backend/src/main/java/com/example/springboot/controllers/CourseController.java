@@ -1,7 +1,6 @@
 package com.example.springboot.controllers;
 
 import com.example.springboot.DTOs.CourseDTO;
-import com.example.springboot.DTOs.SubscriptionWithCourseDTO;
 import com.example.springboot.models.Course;
 import com.example.springboot.models.User;
 import com.example.springboot.services.CourseServiceImpl;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

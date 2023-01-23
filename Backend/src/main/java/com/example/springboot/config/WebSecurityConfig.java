@@ -43,6 +43,8 @@ public class WebSecurityConfig {
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/security/register").permitAll()
                 .antMatchers("/security/login").permitAll()
+                .antMatchers("/user/id/{id}").permitAll()
+                .antMatchers("/user/name/{name}").permitAll()
                 .antMatchers("/course/courses").permitAll()
                 .antMatchers("/course/courses/{courseName}").permitAll()
                 .antMatchers("/recipe/{recipeId}").permitAll()

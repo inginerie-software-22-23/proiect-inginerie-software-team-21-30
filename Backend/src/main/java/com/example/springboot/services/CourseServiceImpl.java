@@ -1,9 +1,7 @@
 package com.example.springboot.services;
 
 import com.example.springboot.exceptions.NoSuchCourseExistsException;
-import com.example.springboot.exceptions.NoSuchUserExistsException;
 import com.example.springboot.models.Course;
-import com.example.springboot.models.User;
 import com.example.springboot.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
