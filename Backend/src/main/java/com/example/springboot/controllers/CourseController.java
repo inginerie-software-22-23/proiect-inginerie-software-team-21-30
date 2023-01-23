@@ -75,14 +75,7 @@ public class CourseController {
     @CrossOrigin
     @PutMapping(value = "/update/{courseId}")
     public String update(@RequestBody Course newCourseData, @PathVariable Long courseId) {
-        Course courseToUpdate = courseService.findById(courseId);
-
-        courseToUpdate.setName(newCourseData.getName());
-        courseToUpdate.setShortDescription(newCourseData.getShortDescription());
-        courseToUpdate.setLongDescription(newCourseData.getLongDescription());
-        courseToUpdate.setMeetLink(newCourseData.getMeetLink());
-
-        return courseService.update(courseToUpdate);
+        return courseService.update(newCourseData, courseId);
     }
 
     @CrossOrigin

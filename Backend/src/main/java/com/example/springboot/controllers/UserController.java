@@ -25,19 +25,14 @@ public class UserController {
     }
 
     @CrossOrigin
-    @PutMapping(value = "/update/{userId}")
-    public String update(@RequestBody User newUserData, @PathVariable Long userId) {
-        User userToUpdate = userService.findById(userId);
-
-        userToUpdate.setName(newUserData.getName());
-        userToUpdate.setEmail(newUserData.getEmail());
-
-        return userService.update(userToUpdate);
+    @PutMapping(value = "/update/{id}")
+    public String update(@RequestBody User newUserData, @PathVariable Long id) {
+        return userService.update(newUserData, id);
     }
 
     @CrossOrigin
-    @DeleteMapping(value = "/delete/{userId}")
-    public String delete(@PathVariable Long userId) {
-        return userService.delete(userId);
+    @DeleteMapping(value = "/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        return userService.delete(id);
     }
 }

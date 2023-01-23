@@ -5,7 +5,6 @@ import com.example.springboot.models.Course;
 import com.example.springboot.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ public class CourseServiceImpl implements CourseService {
         return "Course saved successfully";
     }
 
-    public Course findById(@PathVariable Long id) {
+    public Course findById(Long id) {
         return courseRepository.findById(id)
                 .orElseThrow(()
                         -> new NoSuchCourseExistsException("No course found with id = " + id));
@@ -37,20 +36,25 @@ public class CourseServiceImpl implements CourseService {
                 collect(Collectors.toList());
     }
 
-    public List<Course> filterByName(@PathVariable String courseName) {
+    public List<Course> filterByName(String courseName) {
         return courseRepository.findAll().stream().
                 filter(x -> x.getName().contains(courseName)).
                 collect(Collectors.toList());
     }
 
-    public String update(Course course) {
-        Optional<Course> courseToUpdate = courseRepository.findById(course.getId());
+    public String update(Course newCourseData, Long id) {
+        Optional<Course> courseToUpdate = courseRepository.findById(id);
 
         if (courseToUpdate.isEmpty()) {
-            throw new NoSuchCourseExistsException("No course found with id = " + course.getId());
+            throw new NoSuchCourseExistsException("No course found with id = " + id);
         }
 
-        courseRepository.save(course);
+        courseToUpdate.get().setName(newCourseData.getName());
+        courseToUpdate.get().setShortDescription(newCourseData.getShortDescription());
+        courseToUpdate.get().setLongDescription(newCourseData.getLongDescription());
+        courseToUpdate.get().setMeetLink(newCourseData.getMeetLink());
+
+        courseRepository.save(courseToUpdate.get());
         return "Course updated successfully";
     }
 

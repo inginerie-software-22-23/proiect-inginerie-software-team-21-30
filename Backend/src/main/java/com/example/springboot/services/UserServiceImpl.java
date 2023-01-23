@@ -24,13 +24,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
 
-    public User findById(@PathVariable Long id) {
+    public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(()
                         -> new NoSuchUserExistsException("No user found with id = " + id));
     }
 
-    public User findByName(@PathVariable String name) {
+    public User findByName(String name) {
         return userRepository.findByName(name)
                 .orElseThrow(()
                         -> new NoSuchUserExistsException("No user found with name " + name));
@@ -57,14 +57,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public String update(User user) {
-        Optional<User> userToUpdate = userRepository.findById(user.getId());
+    public String update(User newUserData, Long id) {
+        Optional<User> userToUpdate = userRepository.findById(id);
 
         if (userToUpdate.isEmpty()) {
-            throw new NoSuchUserExistsException("No user found with id = " + user.getId());
+            throw new NoSuchUserExistsException("No user found with id = " + id);
         }
 
-        userRepository.save(user);
+        userToUpdate.get().setName(newUserData.getName());
+        userToUpdate.get().setEmail(newUserData.getEmail());
+
+        userRepository.save(userToUpdate.get());
         return "User updated successfully";
     }
 

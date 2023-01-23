@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class SubscriptionServiceImpl implements SubscriptionSerivce {
+public class SubscriptionServiceImpl implements SubscriptionService {
     @Autowired
     private SubscriptionsRepositiory subscriptionsRepository;
     @Autowired
