@@ -104,6 +104,7 @@ public class CourseControllerUnitTests {
     }
 
      @Test
+     @WithMockUser()
     public void givenNotAuthenticated_whenGetAllCourses_thenReturnJsonArray() throws Exception{
         given(courseService.findAll()).willReturn(courseList);
 
@@ -116,6 +117,7 @@ public class CourseControllerUnitTests {
     }
 
     @Test
+    @WithMockUser()
     public void givenNotAuthenticated_whenCreateCourse_thenReturn403() throws Exception{
         mvc.perform(post("/course/create")
                 .contentType(MediaType.APPLICATION_JSON))
