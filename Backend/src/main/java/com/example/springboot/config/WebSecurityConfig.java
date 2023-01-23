@@ -49,16 +49,10 @@ public class WebSecurityConfig {
                 .antMatchers("/recipe/recipes").permitAll()
                 .antMatchers("/recipe/recipes/{recipeName}").permitAll()
                 // Our private endpoints
-                .antMatchers("/course/{courseId}").authenticated()
-                .antMatchers("/course/courses/mentor/{username}").authenticated()
                 .antMatchers("/course/create/{mentorId}").hasRole("MENTOR")
                 .antMatchers("/course/update/{courseId}").hasRole("MENTOR")
                 .antMatchers("/course/delete/{courseId}").hasRole("MENTOR")
-                .antMatchers("/recipe/recipes/user/{username}").authenticated()
-                .antMatchers("/recipe/create/{userId}").authenticated()
-                .antMatchers("/recipe/update/{recipeId}").authenticated()
-                .antMatchers("/recipe/delete/{recipeId}").authenticated()
-                .antMatchers("/subscriptions/subscribe/{traineeId}/{courseId}").authenticated();
+                .anyRequest().authenticated();
 
         http.headers().frameOptions().sameOrigin();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
