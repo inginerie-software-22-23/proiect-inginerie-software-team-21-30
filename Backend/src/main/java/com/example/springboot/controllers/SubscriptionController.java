@@ -1,6 +1,6 @@
 package com.example.springboot.controllers;
 
-import com.example.springboot.DTOs.SubscriptionDTO;
+import com.example.springboot.DTOs.SubscriptionWithCourseDTO;
 import com.example.springboot.services.SubscriptionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +22,17 @@ public class SubscriptionController {
 
     @CrossOrigin
     @GetMapping("/all/{username}")
-    public List<SubscriptionDTO> getSubscriptionsOfUser(@PathVariable String username) {
+    public List<SubscriptionWithCourseDTO> getSubscriptionsOfUser(@PathVariable String username) {
         return subscriptionService.getSubscriptionsOfUser(username)
                 .stream()
-                .map(SubscriptionDTO::new)
+                .map(SubscriptionWithCourseDTO::new)
                 .collect(Collectors.toList());
     }
 
     @CrossOrigin
     @GetMapping("/{subscriptionId}")
-    public SubscriptionDTO findById(@PathVariable Long subscriptionId) {
-        return new SubscriptionDTO(subscriptionService.findById(subscriptionId));
+    public SubscriptionWithCourseDTO findById(@PathVariable Long subscriptionId) {
+        return new SubscriptionWithCourseDTO(subscriptionService.findById(subscriptionId));
     }
 
     @CrossOrigin
