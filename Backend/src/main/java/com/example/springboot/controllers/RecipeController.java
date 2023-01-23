@@ -76,15 +76,7 @@ public class RecipeController {
     @CrossOrigin
     @PutMapping(value = "/update/{recipeId}")
     public String update(@RequestBody Recipe newRecipeData, @PathVariable Long recipeId) {
-        Recipe recipeToUpdate = recipeService.findById(recipeId);
-
-        recipeToUpdate.setName(newRecipeData.getName());
-        recipeToUpdate.setImage(newRecipeData.getImage());
-        recipeToUpdate.setDescription(newRecipeData.getDescription());
-        recipeToUpdate.setIngredients(newRecipeData.getIngredients());
-        recipeToUpdate.setEstimatedPrepTimeInMinutes(newRecipeData.getEstimatedPrepTimeInMinutes());
-
-        return recipeService.update(recipeToUpdate);
+        return recipeService.update(newRecipeData, recipeId);
     }
 
     @CrossOrigin

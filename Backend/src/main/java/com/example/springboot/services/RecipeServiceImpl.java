@@ -5,7 +5,6 @@ import com.example.springboot.models.Recipe;
 import com.example.springboot.repositories.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ public class RecipeServiceImpl implements RecipeService {
         return "Recipe saved successfully";
     }
 
-    public Recipe findById(@PathVariable Long id) {
+    public Recipe findById(Long id) {
         return recipeRepository.findById(id)
                 .orElseThrow(()
                         -> new NoSuchRecipeExistsException("No recipe found with id = " + id));
@@ -37,20 +36,26 @@ public class RecipeServiceImpl implements RecipeService {
                 collect(Collectors.toList());
     }
 
-    public List<Recipe> filterByName(@PathVariable String recipeName) {
+    public List<Recipe> filterByName(String recipeName) {
         return recipeRepository.findAll().stream().
                 filter(x -> x.getName().contains(recipeName)).
                 collect(Collectors.toList());
     }
 
-    public String update(Recipe recipe) {
-        Optional<Recipe> recipeToUpdate = recipeRepository.findById(recipe.getId());
+    public String update(Recipe newRecipeData, Long id) {
+        Optional<Recipe> recipeToUpdate = recipeRepository.findById(id);
 
         if (recipeToUpdate.isEmpty()) {
-            throw new NoSuchRecipeExistsException("No recipe found with id = " + recipe.getId());
+            throw new NoSuchRecipeExistsException("No recipe found with id = " + id);
         }
 
-        recipeRepository.save(recipe);
+        recipeToUpdate.get().setName(newRecipeData.getName());
+        recipeToUpdate.get().setImage(newRecipeData.getImage());
+        recipeToUpdate.get().setDescription(newRecipeData.getDescription());
+        recipeToUpdate.get().setIngredients(newRecipeData.getIngredients());
+        recipeToUpdate.get().setEstimatedPrepTimeInMinutes(newRecipeData.getEstimatedPrepTimeInMinutes());
+
+        recipeRepository.save(recipeToUpdate.get());
         return "Recipe updated successfully";
     }
 

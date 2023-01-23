@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,13 +24,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
 
-    public User findById(@PathVariable Long id) {
+    public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(()
                         -> new NoSuchUserExistsException("No user found with id = " + id));
     }
 
-    public User findByName(@PathVariable String name) {
+    public User findByName(String name) {
         return userRepository.findByName(name)
                 .orElseThrow(()
                         -> new NoSuchUserExistsException("No user found with name " + name));
@@ -56,5 +55,30 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new UserAlreadyExistsException("User already exists");
         }
+    }
+
+    public String update(User newUserData, Long id) {
+        Optional<User> userToUpdate = userRepository.findById(id);
+
+        if (userToUpdate.isEmpty()) {
+            throw new NoSuchUserExistsException("No user found with id = " + id);
+        }
+
+        userToUpdate.get().setName(newUserData.getName());
+        userToUpdate.get().setEmail(newUserData.getEmail());
+
+        userRepository.save(userToUpdate.get());
+        return "User updated successfully";
+    }
+
+    public String delete(Long id) {
+        Optional<User> userToDelete = userRepository.findById(id);
+
+        if (userToDelete.isEmpty()) {
+            throw new NoSuchUserExistsException("No user found with id = " + id);
+        }
+
+        userRepository.deleteById(id);
+        return "User deleted successfully";
     }
 }
