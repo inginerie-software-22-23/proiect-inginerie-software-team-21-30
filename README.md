@@ -6,7 +6,7 @@ RecipeBuddy features a mentoring website for cooking, built with Spring Boot + M
 
 Ever wanted to get rid of unhealthy eating habits, take up the hobby of cooking, or just overall improve your culinary skills? RecipeBuddy is the app that can do just that, and more, through mentorship!
 
-Our website focuses on providing support for people that want to expand their repertoire of cooking. It features a register/login system that lets people choose between two types of users: trainee and mentor. Through the functionality of associating mentors to trainees, users can search for and interact with people who they think they would get along with, by subscribing to their cooking courses, and in turn, mentors can organize video calls with their trainees. Moreover, the platform gives both trainees and mentors the option to post their own recipes, this way creating an inclusive and learn-friendly environment. In order to find out more about others, and edit user info, each user has their own profile page on which data such as their: posted recipes, posted courses (only for mentors), personal info; is displayed, and can be edited only by the owner of the account.
+Our website focuses on providing support for people that want to expand their repertoire of cooking. It features a register/login system that lets people choose between two types of users: trainee and mentor. Through the functionality of associating mentors to trainees, users can search for and interact with people who they think they would get along with, by subscribing to their cooking courses, and in turn, mentors can organize video calls with their trainees. Moreover, the platform gives both trainees and mentors the option to post their own recipes, this way creating an inclusive and learn-friendly environment. In order to edit user info, each user has their own profile page, on which personal data is displayed: username, e-mail; and can be edited only by the owner of the account.
 
 ## Problem Statement
 
@@ -14,11 +14,11 @@ Our website focuses on providing support for people that want to expand their re
 	
 * Relevance: it is important for people to know how to cook for themselves, so that they don't have to rely on fast food diets, or on other people doing the cooking for them. Moreover, by preparing their own meals, they have the freedom to experiment with their dishes and learn what they like or dislike, and they may also find it enjoyable, thus making a hobby out of it.
 	
-* Solution (aims & objectives): by developing a mentoring website for cooking, people will be able to join online meetings with other people (or only with a specific mentor), that showcase their cooking sessions through webcams, and get proper guidance, without having to tirelessly search the internet for recipes, videos, and how-to's. Furthermore, trainees could look up mentors' profiles, so as to choose the mentors that would meet their expectations the most. And for further individual improvement, users could have free access to courses and recipes posted by mentors.
+* Solution (aims & objectives): by developing a mentoring website for cooking, users will have the option to subscribe to courses posted by mentors (for free), this way being able to join online meetings with other people, as well as with the course's mentor, that showcase the mentor's culinary sessions through a webcam. By attending live meetings, users can get proper guidance, while also interacting with mentors, and in doing so, they won't have to tirelessly search the internet for recipes, videos, and how-to's. Moreover, for further individual improvement, users have free access to the contents of courses and recipes posted by other users.
 
 ## Functional Decomposition
 
-![Functional decomposition](https://user-images.githubusercontent.com/87432371/204291371-ca5f2e30-cec3-46e4-85af-c48db7cbd5c3.png)
+![Functional decomposition](https://user-images.githubusercontent.com/87432371/214106011-80f093b5-67d3-4e67-8786-a7199c304371.png)
 
 ## Non-Functional Requirements List
 
@@ -47,7 +47,7 @@ __Localization:__
 ## Activity Diagram
 
 [Link](https://lucid.app/lucidchart/dd6790d3-06f6-428d-bfe3-b897265bea45/edit?invitationId=inv_af3ae1b8-ed85-4b20-8efb-a4c7f5fad8e2&page=0_0#) (if the image below is not visible enough)
-![Activity diagram](https://user-images.githubusercontent.com/87432371/203645406-402d7612-03dd-4e9a-8426-1b66f3c07789.png)
+![Activity diagram new](https://user-images.githubusercontent.com/87432371/214105465-6bcda982-27f9-49fa-a464-cd1974ddfe0b.png)
 
 ## Project Charter Document
 
