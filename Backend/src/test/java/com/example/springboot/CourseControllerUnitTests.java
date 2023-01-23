@@ -1,5 +1,6 @@
 package com.example.springboot;
 
+import com.example.springboot.config.WebSecurityConfig;
 import com.example.springboot.controllers.CourseController;
 import com.example.springboot.models.Course;
 import com.example.springboot.models.Role;
@@ -8,21 +9,20 @@ import com.example.springboot.services.CourseServiceImpl;
 import com.example.springboot.services.UserDetailsServiceImpl;
 import com.example.springboot.services.UserServiceImpl;
 import com.example.springboot.utils.JwtTokenUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -34,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(CourseController.class)
+@Import(WebSecurityConfig.class)
 public class CourseControllerUnitTests {
     @Autowired
     private MockMvc mvc;
@@ -52,9 +53,12 @@ public class CourseControllerUnitTests {
     private Role roleTrainee;
     private Role roleMentor;
     private List<Course> courseList;
+    private ObjectMapper objectMapper;
 
     @Before
     public void setup() {
+        objectMapper = new ObjectMapper();
+
         roleMentor = new Role();
         roleMentor.setName("ROLE_MENTOR");
 
@@ -92,24 +96,11 @@ public class CourseControllerUnitTests {
 
     @Test
     @WithMockUser(roles = {"TRAINEE", "MENTOR"})
-    public void givenCourses_whenGetAllCourses_thenReturnJsonArray() throws Exception{
+    public void givenCourses_whenGetAllCourses_thenReturnJsonArray() throws Exception {
         given(courseService.findAll()).willReturn(courseList);
 
         mvc.perform(get("/course/courses")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].name", is(course1.getName())))
-                .andExpect(jsonPath("$[1].name", is(course2.getName())));
-    }
-
-     @Test
-     @WithMockUser()
-    public void givenNotAuthenticated_whenGetAllCourses_thenReturnJsonArray() throws Exception{
-        given(courseService.findAll()).willReturn(courseList);
-
-        mvc.perform(get("/course/courses")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is(course1.getName())))
@@ -117,10 +108,40 @@ public class CourseControllerUnitTests {
     }
 
     @Test
-    @WithMockUser()
-    public void givenNotAuthenticated_whenCreateCourse_thenReturn403() throws Exception{
+    public void givenNotAuthenticated_whenGetAllCourses_thenReturnJsonArray() throws Exception {
+        given(courseService.findAll()).willReturn(courseList);
+
+        mvc.perform(get("/course/courses")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name", is(course1.getName())))
+                .andExpect(jsonPath("$[1].name", is(course2.getName())));
+    }
+
+    @Test
+    public void givenNotAuthenticated_whenCreateCourse_thenReturn403() throws Exception {
         mvc.perform(post("/course/create")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = {"MENTOR", "TRAINEE"})
+    public void givenMentor_whenCreateCourse_thenReturnCreatedCourse() throws Exception {
+        Course newCourse = new Course();
+        newCourse.setName("newCourse");
+        newCourse.setUser(user);
+
+        given(userService.findById(user.getId())).willReturn(user);
+        given(courseService.create(newCourse)).willReturn("Course saved successfully");
+
+        Map<String, String> body = new HashMap<>();
+        body.put("name", "newCourse");
+
+        mvc.perform(post("/course/create/" + user.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(body)))
+                .andExpect(status().isCreated());
     }
 }
