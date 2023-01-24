@@ -4,7 +4,8 @@
             <label for="username">Username</label>
             <input formControlName="name"
                    [ngClass]="{'input-error': (name.touched && !name.valid)}"
-                   autocomplete="off" />
+                   autocomplete="off" 
+                   placeholder="Enter username"/>
         </div>
 
         <div class="form-row">
@@ -12,7 +13,8 @@
             <input formControlName="password"
                    [ngClass]="{'input-error': (password.touched && !password.valid)}"
                    type="password"
-                   autocomplete="off">
+                   autocomplete="off"
+                   placeholder="Enter password">
         </div>
 
         <div class="form-row">
@@ -20,7 +22,8 @@
             <input formControlName="email"
                    [ngClass]="{'input-error': (email.touched && !email.valid)}"
                    type="email"
-                   autocomplete="off">
+                   autocomplete="off"
+                   placeholder="Enter email">
         </div>
 
         <div class="mentor-row">

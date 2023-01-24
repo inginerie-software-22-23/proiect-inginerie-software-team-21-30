@@ -45,16 +45,15 @@ button{
     border: 0;
     border-radius: 3px;
     font-weight: 700;
-    background-color: #fcd949;
+    background-color: #c25757;
     cursor: pointer;
 }
 
-.login-btn{
-    margin-top: 35px;
+.delete-btn{
+    margin-top: 25px;
 }
 
-.create-btn{
-    margin-top: 20px;
-    background-color: #d3c48c;
-    border: 2px solid #fcd949;
+.save-btn{
+    margin-top: 30px;
+    background-color: #6bac63;
 }

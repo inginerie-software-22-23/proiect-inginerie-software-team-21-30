@@ -11,7 +11,7 @@ form {
     width: 350px;
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    background-color: rgb(232, 232, 232);
+    background-color: #d3c48c;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -54,7 +54,7 @@ button {
     border: 0;
     border-radius: 3px;
     font-weight: 700;
-    background-color: #92c24c;
+    background-color: #fcd949;
     cursor: pointer;
     font-size: 14px;
 }
@@ -65,8 +65,8 @@ button {
 
 .login-btn {
     margin-top: 20px;
-    background-color: rgb(236, 236, 236);
-    border: 2px solid #92c24c;
+    background-color: #d3c48c;
+    border: 2px solid #fcd949;
 }
 
 .label-for-mentor {

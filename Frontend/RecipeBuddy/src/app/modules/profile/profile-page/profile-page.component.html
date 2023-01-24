@@ -1,0 +1,26 @@
+<div class="container">
+    <form [formGroup]="editForm">
+        <div class="form-row">
+            <label for="username">Username</label>
+            <input id="name"
+                   formControlName="name"
+                   autocomplete="off">
+        </div>
+
+        <div class="form-row">
+            <label for="email">Email</label>
+            <input id="email"
+                   formControlName="email"
+                   autocomplete="off">
+        </div>
+
+        <button type="button"
+                class="save-btn"
+                (click)="saveChanges()">Save changes</button>
+
+        <button type="button"
+                class="delete-btn"
+                (click)="deleteAccount()">Delete account</button>
+        
+    </form>
+</div>

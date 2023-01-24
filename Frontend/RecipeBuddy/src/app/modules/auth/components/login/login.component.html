@@ -1,10 +1,11 @@
 <div class="container">
     <form [formGroup]="loginForm">
         <div class="form-row">
-            <label for="name">Username</label>
+            <label for="username">Username</label>
             <input id="name"
                    formControlName="name"
-                   autocomplete="off">
+                   autocomplete="off"
+                   placeholder="Enter username">
         </div>
 
         <div class="form-row">
@@ -12,7 +13,8 @@
             <input id="password"
                    type="password"
                    formControlName="password"
-                   autocomplete="off">
+                   autocomplete="off"
+                   placeholder="Enter password">
         </div>
 
         <button type="button"

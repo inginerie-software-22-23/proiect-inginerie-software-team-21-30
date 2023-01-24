@@ -21,6 +21,7 @@ import { UserService } from './services/user.service';
 import { MentorGuard } from './guards/mentor.guard';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RecipesModule } from './modules/recipes/recipe.module';
+import { ProfileModule } from './modules/profile/profile.module';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { RecipesModule } from './modules/recipes/recipe.module';
     RippleModule,
     RadioButtonModule,
     FormsModule,
-    RecipesModule
+    RecipesModule,
+    ProfileModule
   ],
   providers: [
     AuthGuard,
