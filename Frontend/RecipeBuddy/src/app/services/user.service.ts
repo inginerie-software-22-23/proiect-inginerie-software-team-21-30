@@ -15,6 +15,18 @@ export class UserService {
         return this._http.get(Endpoints.USER + `/name/${username}`);
     }
 
+    deleteUser(id: number){
+        return this._http.delete(Endpoints.USER + `/delete/${id}`);
+    }
+
+    updateUser(user: IUser){
+        return this._http.put(Endpoints.USER + `/update/${user.id}`, {
+            name: user.name,
+            password: user.password,
+            email: user.email
+        });
+    }
+
     refreshUser() {
         const username = localStorage.getItem("User");
         if (!username) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take, takeWhile, catchError, Observable, of } from 'rxjs';
@@ -13,18 +13,19 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.css']
 })
-export class ProfilePageComponent implements OnInit {
+export class ProfilePageComponent implements OnInit, OnDestroy {
 
   editForm: FormGroup;
   alive: boolean;
+  user: IUser;
 
   constructor(private _authService: AuthService,
     private _notificationsService: NotificationsService,
     private _userService: UserService,
     private _router: Router) {
     this.editForm = new FormGroup({
-      name: new FormControl("mike92", [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$'), Validators.maxLength(20)]),
-      email: new FormControl("mike@yahoo.com", [Validators.required])
+      name: new FormControl("", [Validators.required, Validators.pattern('^[a-zA-Z0-9]+$'), Validators.maxLength(20)]),
+      email: new FormControl("", [Validators.required])
     });
   }
   get name(): FormControl {
@@ -37,17 +38,37 @@ export class ProfilePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.alive = true;
+
+    this._userService.getUser().pipe(
+      takeWhile(() => this.alive),
+    ).subscribe((user: IUser) => {
+      this.user = user;
+      this.editForm.patchValue({
+        name: this.user.name,
+        email: this.user.email
+      });
+    });
   }
 
 
   deleteAccount() {
-    const isFormValid = this.editForm.valid;
-    if (isFormValid) {
-    }
+    this._userService.deleteUser(this.user.id).pipe(
+      takeWhile(() => this.alive),
+    ).subscribe((res) => {
+      this._notificationsService.createMessage("success", "User", "User deleted");
+    });
+    this._router.navigate['/login'];
+    localStorage.removeItem('Token');
+    localStorage.removeItem('User');
+
   }
 
   saveChanges(){
-    
+    this._userService.updateUser({...this.editForm.getRawValue(), id: this.user.id}).pipe(
+      takeWhile(() => this.alive),
+    ).subscribe((res) => {
+      this._notificationsService.createMessage("success", "User", "User updated");
+    });
   }
 
   getUser(username: string) {
