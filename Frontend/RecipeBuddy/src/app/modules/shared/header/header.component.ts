@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   isUserLoggedIn() {
-    return true;
+    return this._userService.isLoggedIn();
   }
 
   checkIfUserIsMentor(user: IUser) {
