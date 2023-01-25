@@ -11,7 +11,7 @@ form{
     width: 350px;
     border-radius: 3px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    background-color: #d3c48c;
+    background-color: #faeec1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,7 +45,7 @@ button{
     border: 0;
     border-radius: 3px;
     font-weight: 700;
-    background-color: #c25757;
+    background-color: #fc5050;
     cursor: pointer;
 }
 

@@ -16,14 +16,16 @@ export class UserService {
     }
 
     deleteUser(id: number){
-        return this._http.delete(Endpoints.USER + `/delete/${id}`);
+        return this._http.delete(Endpoints.USER + `/delete/${id}`, { responseType: 'text' });
     }
 
     updateUser(user: IUser){
         return this._http.put(Endpoints.USER + `/update/${user.id}`, {
             name: user.name,
-            password: user.password,
             email: user.email
+        },
+        { 
+            responseType: 'text' 
         });
     }
 

@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       ).subscribe((user: IUser) => this.checkIfUserIsMentor(user));
   }
 
-  navigateHome(){
+  navigateHome() {
     this.router.navigate(["/home"]);
   }
 
@@ -40,12 +40,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   isUserLoggedIn() {
-    //return this._userService.isLoggedIn();
-    return true;
+    return this._userService.isLoggedIn();
   }
 
   checkIfUserIsMentor(user: IUser) {
-    if(!user){
+    if(!user) {
       this.isMentor = false;
       return;
     }

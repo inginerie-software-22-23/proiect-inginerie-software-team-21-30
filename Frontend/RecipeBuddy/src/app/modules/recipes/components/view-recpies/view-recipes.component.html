@@ -21,7 +21,8 @@
                 <div *ngFor="let recipe of allRecipes"
                      class="col-sm-4 col-md-3 my-3">
                     <app-recipe-card [recipe]="recipe"
-                                     (onSelectRecipe)="selectRecipe($event)">
+                                     (onSelectRecipe)="selectRecipe($event)"
+                                     *ngIf="recipe.author != username ">
                     </app-recipe-card>
                 </div>
             </div>

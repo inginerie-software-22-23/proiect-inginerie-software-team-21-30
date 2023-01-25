@@ -55,19 +55,23 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     this._userService.deleteUser(this.user.id).pipe(
       takeWhile(() => this.alive),
     ).subscribe((res) => {
-      this._notificationsService.createMessage("success", "User", "User deleted");
+      localStorage.removeItem('Token');
+      localStorage.removeItem('User');
+      this._notificationsService.createMessage("success", "User", "User deleted.");
+      setTimeout(() => {
+        this._router.navigate(['/login']);
+      }, 500);
     });
-    this._router.navigate['/login'];
-    localStorage.removeItem('Token');
-    localStorage.removeItem('User');
-
   }
 
   saveChanges(){
     this._userService.updateUser({...this.editForm.getRawValue(), id: this.user.id}).pipe(
       takeWhile(() => this.alive),
     ).subscribe((res) => {
-      this._notificationsService.createMessage("success", "User", "User updated");
+      localStorage.removeItem('Token');
+      localStorage.removeItem('User');
+      this._notificationsService.createMessage("success", "User", "Profile updated.");
+      this._router.navigate(['/login']);
     });
   }
 
