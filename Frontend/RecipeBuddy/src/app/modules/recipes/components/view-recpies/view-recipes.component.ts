@@ -23,7 +23,6 @@ export class ViewRecipesComponent implements OnInit, OnDestroy {
   selectedMode = new BehaviorSubject<string>(null);
   isManageMode = new BehaviorSubject<boolean>(false);
   isDialogVisible = new BehaviorSubject<boolean>(false);
-  refreshAllRecipes = true;
 
   constructor(private _userService: UserService, private _notificationsService: NotificationsService, private _recipesService: RecipesService) { }
 
@@ -40,6 +39,7 @@ export class ViewRecipesComponent implements OnInit, OnDestroy {
 
   mapRecipes(recipes: IRecipe[]) {
     const yourRecipesIds = this.yourRecipes.map(recipe => recipe.id);
+    this.allRecipes = [];
     recipes.forEach(recipe => {
       if (yourRecipesIds.findIndex((id) => id === recipe.id) === -1) {
         this.allRecipes.push(recipe);
@@ -74,9 +74,7 @@ export class ViewRecipesComponent implements OnInit, OnDestroy {
         takeWhile(() => this.alive)
       ).subscribe((recipes: IRecipe[]) => {
         this.yourRecipes = recipes;
-        if (this.refreshAllRecipes) {
-          this.getAllRecipes()
-        }
+        this.getAllRecipes();
       });
       return;
     }
@@ -88,7 +86,6 @@ export class ViewRecipesComponent implements OnInit, OnDestroy {
       takeWhile(() => this.alive)
     ).subscribe((recipes: IRecipe[]) => {
       this.mapRecipes(recipes)
-      this.refreshAllRecipes = false;
     });
   }
 
