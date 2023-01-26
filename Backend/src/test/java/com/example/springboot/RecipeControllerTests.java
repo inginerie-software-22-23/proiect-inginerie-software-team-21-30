@@ -1,10 +1,12 @@
 package com.example.springboot;
 
 import com.example.springboot.config.WebSecurityConfig;
-import com.example.springboot.controllers.CourseController;
 import com.example.springboot.controllers.RecipeController;
 import com.example.springboot.exceptions.NoSuchCourseExistsException;
-import com.example.springboot.models.*;
+import com.example.springboot.models.Recipe;
+import com.example.springboot.models.Role;
+import com.example.springboot.models.Subscription;
+import com.example.springboot.models.User;
 import com.example.springboot.services.RecipeServiceImpl;
 import com.example.springboot.services.UserDetailsServiceImpl;
 import com.example.springboot.services.UserServiceImpl;
@@ -15,16 +17,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -192,7 +189,7 @@ public class RecipeControllerTests {
         given(userService.findByName(anyString())).willReturn(mentor);
         given(recipeService.findRecipesByUser(anyString())).willReturn(recipeList);
 
-        mvc.perform(get("/recipe/recipes/user/" + anyString())
+        mvc.perform(get("/recipe/recipes/user/ " + anyString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
