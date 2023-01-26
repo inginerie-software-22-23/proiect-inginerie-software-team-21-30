@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -62,6 +65,15 @@ public class UserServiceImpl implements UserService {
 
         if (userToUpdate.isEmpty()) {
             throw new NoSuchUserExistsException("No user found with id = " + id);
+        }
+
+        if (!newUserData.getName().equals(userToUpdate.get().getName())) {
+            long nrOfUsersWithIdenticalName = userRepository.findAll().stream().
+                    filter(x -> x.getName().equals(newUserData.getName())).
+                    count();
+            if (nrOfUsersWithIdenticalName == 1) {
+                return "Username already taken.";
+            }
         }
 
         userToUpdate.get().setName(newUserData.getName());

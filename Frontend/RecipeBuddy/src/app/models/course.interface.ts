@@ -6,7 +6,7 @@ export interface ICourse {
     shortDescription: string;
     longDescription?: string;
     meetLink?: string;
-    mentor?: IUser[];
+    mentor?: IUser[] | string;
     subscriptions?;
     activeSubscription?: boolean;
     subscriptionId?: number;

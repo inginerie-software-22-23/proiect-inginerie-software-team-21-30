@@ -38,10 +38,9 @@ public class CourseController {
 
     @CrossOrigin
     @GetMapping("/courses")
-    public List<CourseDTO> findAll(@RequestParam(required = false) String username) {
+    public List<CourseDTO> findAll() {
         List<Course> courses = courseService.findAll();
         List<CourseDTO> coursesToReturn = courses.stream()
-                .filter(x -> !x.getUser().getName().equals(username))
                 .sorted(Comparator.comparing(Course::getId))
                 .map(CourseDTO::new)
                 .collect(Collectors.toList());

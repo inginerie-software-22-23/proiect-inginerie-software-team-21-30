@@ -6,9 +6,9 @@
         <h1>Current subscriptions</h1>
     </div>
     <div class="container">
-        <div class="row">
+        <div *ngIf="(subscriptions | async)?.length; else noSubscriptions" class="row">
             <div *ngFor="let subscription of (subscriptions | async)"
-                class="col-sm-4 col-md-3 my-3">
+                    class="col-sm-4 col-md-3 my-3">
                 <app-course-card [isSubscriptionCard]="true"
                                 [course]="subscription"
                                 (onSelectCourse)="selectSubscription($event)"
@@ -16,6 +16,9 @@
                 </app-course-card>
             </div>
         </div>
+        <ng-template #noSubscriptions>
+            <h1 class="no-subscriptions">No subscriptions found</h1>
+        </ng-template>
     </div>
 </div>
 <course-dialog [visible]="isDialogVisible | async"

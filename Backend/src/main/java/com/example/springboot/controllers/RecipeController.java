@@ -39,10 +39,9 @@ public class RecipeController {
 
     @CrossOrigin
     @GetMapping("/recipes")
-    public List<RecipeCardDTO> findAll(@RequestParam(required = false) String username) {
+    public List<RecipeCardDTO> findAll() {
         List<Recipe> recipes = recipeService.findAll();
         List<RecipeCardDTO> recipesToReturn = recipes.stream()
-                .filter(x -> !x.getUser().getName().equals(username))
                 .sorted(Comparator.comparing(Recipe::getId))
                 .map(RecipeCardDTO::new)
                 .collect(Collectors.toList());

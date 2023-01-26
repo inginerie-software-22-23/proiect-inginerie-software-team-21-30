@@ -21,8 +21,7 @@
                 <div *ngFor="let recipe of allRecipes"
                      class="col-sm-4 col-md-3 my-3">
                     <app-recipe-card [recipe]="recipe"
-                                     (onSelectRecipe)="selectRecipe($event)"
-                                     *ngIf="recipe.author != username ">
+                                     (onSelectRecipe)="selectRecipe($event)">
                     </app-recipe-card>
                 </div>
             </div>
@@ -31,6 +30,9 @@
                        [recipe]="selectedRecipe | async"
                        (onCloseDialog)="onDialogClose()">
         </recipe-dialog>
+    </div>
+    <div *ngIf="!(isManageMode | async) && !allRecipes.length">
+        <h1 class="no-recipes">No recipes found</h1>
     </div>
     <div *ngIf="(isManageMode | async)"
          class="manage-recipes">
@@ -62,5 +64,8 @@
                            [user]="user"
                            (dialogClosed)="onDialogClose($event)">
         </app-recipe-manage>
+    </div>
+    <div *ngIf="(isManageMode | async) && !yourRecipes.length">
+        <h1 class="no-recipes">No recipes found</h1>
     </div>
 </div>

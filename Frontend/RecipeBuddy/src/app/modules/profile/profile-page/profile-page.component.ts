@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.css']
+  styleUrls: ['./profile-page.component.scss']
 })
 export class ProfilePageComponent implements OnInit, OnDestroy {
 
@@ -42,11 +42,13 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     this._userService.getUser().pipe(
       takeWhile(() => this.alive),
     ).subscribe((user: IUser) => {
-      this.user = user;
-      this.editForm.patchValue({
-        name: this.user.name,
-        email: this.user.email
-      });
+      if (user) {
+        this.user = user;
+        this.editForm.patchValue({
+          name: this.user.name,
+          email: this.user.email
+        });
+      }
     });
   }
 
@@ -57,22 +59,37 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     ).subscribe((res) => {
       localStorage.removeItem('Token');
       localStorage.removeItem('User');
-      this._notificationsService.createMessage("success", "User", "User deleted.");
+      this._notificationsService.createMessage(NotificationType.SUCCESS, "User", "User deleted.");
       setTimeout(() => {
         this._router.navigate(['/login']);
       }, 500);
     });
   }
 
-  saveChanges(){
-    this._userService.updateUser({...this.editForm.getRawValue(), id: this.user.id}).pipe(
-      takeWhile(() => this.alive),
-    ).subscribe((res) => {
-      localStorage.removeItem('Token');
-      localStorage.removeItem('User');
-      this._notificationsService.createMessage("success", "User", "Profile updated.");
-      this._router.navigate(['/login']);
-    });
+  saveChanges() {
+    if (this.user.name !== this.editForm.getRawValue().name || 
+        this.user.email !== this.editForm.getRawValue().email) {
+          this._userService.updateUser({...this.editForm.getRawValue(), id: this.user.id}).pipe(
+            takeWhile(() => this.alive),
+            catchError(err => this.handleLoginError(err))
+          ).subscribe((res) => {
+            if (res === "Username already taken.") {
+              this._notificationsService.createMessage(NotificationType.ERROR, 'Profile', "Username already taken.");
+            } else {
+              this._notificationsService.createMessage(NotificationType.SUCCESS, "User", "Profile updated.");
+              if (this.user.name !== this.editForm.getRawValue().name) {
+                localStorage.removeItem('Token');
+                localStorage.removeItem('User');
+                this._router.navigate(['/login']);
+              } else {
+                this.user.email = this.editForm.getRawValue().email;
+                this.editForm.patchValue({
+                  email: this.editForm.getRawValue().email
+                });
+              }
+            }
+          });
+        }
   }
 
   getUser(username: string) {
@@ -89,7 +106,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
 
   handleLoginError(error): Observable<any> {
     const errorMessage = (error?.error?.message) || 'There was an error on the server.';
-    this._notificationsService.createMessage(NotificationType.ERROR, 'Login', errorMessage);
+    this._notificationsService.createMessage(NotificationType.ERROR, 'Profile', errorMessage);
     return of(null);
   }
 

@@ -31,7 +31,9 @@ export class RecipeCardComponent implements OnInit, OnDestroy, OnChanges {
     this._userService.getUser().pipe(
       takeWhile(() => this.alive),
     ).subscribe((user: IUser) => {
-      this.username = user.name;
+      if (user) {
+        this.username = user.name;
+      }
     });
   }
 
