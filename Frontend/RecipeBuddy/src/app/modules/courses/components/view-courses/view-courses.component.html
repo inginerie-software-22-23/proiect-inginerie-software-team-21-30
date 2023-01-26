@@ -6,12 +6,15 @@
         <h1>Available courses</h1>
     </div>
     <div class="container">
-        <div class="row">
+        <div *ngIf="(courses | async)?.length; else noCourses" class="row">
             <div *ngFor="let course of (courses | async)"
                 class="col-sm-4 col-md-3 my-3">
                 <app-course-card [course]="course" (onSelectCourse)="selectCourse($event)" (onSubscribeToCourse)="subscribeToCourse($event)"></app-course-card>
             </div>
         </div>
+        <ng-template #noCourses>
+            <h1 class="no-courses">No courses found</h1>
+        </ng-template>
     </div>
 </div>
 <course-dialog [visible]="isDialogVisible | async"
