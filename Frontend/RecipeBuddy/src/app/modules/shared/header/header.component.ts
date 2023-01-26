@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       ).subscribe((user: IUser) => this.checkIfUserIsMentor(user));
   }
 
-  navigateHome(){
+  navigateHome() {
     this.router.navigate(["/home"]);
   }
 
@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   checkIfUserIsMentor(user: IUser) {
-    if(!user){
+    if(!user) {
       this.isMentor = false;
       return;
     }

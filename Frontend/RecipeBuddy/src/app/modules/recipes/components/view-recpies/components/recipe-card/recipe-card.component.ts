@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, take, takeWhile } from 'rxjs';
 import { NotificationType } from 'src/app/enums/notifications.enum';
 import { IRecipe } from 'src/app/models/recipe.interface';
+import { IUser } from 'src/app/models/user.interface';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { RecipesService } from 'src/app/services/recipes.service';
 import { UserService } from 'src/app/services/user.service';
@@ -20,11 +21,20 @@ export class RecipeCardComponent implements OnInit, OnDestroy, OnChanges {
   @Output() onRefreshRecipes = new EventEmitter<boolean>(null);
   selectedMode = new BehaviorSubject<string>(null);
   alive: boolean;
+  username: string;
 
   constructor(private _userService: UserService, private _sanitizer: DomSanitizer, private _recipesService: RecipesService, private _notificationsService: NotificationsService) { }
 
   ngOnInit(): void {
     this.alive = true;
+
+    this._userService.getUser().pipe(
+      takeWhile(() => this.alive),
+    ).subscribe((user: IUser) => {
+      if (user) {
+        this.username = user.name;
+      }
+    });
   }
 
   selectRecipe() {

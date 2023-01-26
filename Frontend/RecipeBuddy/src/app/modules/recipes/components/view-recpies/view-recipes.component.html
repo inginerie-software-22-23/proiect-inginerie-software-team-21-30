@@ -31,6 +31,9 @@
                        (onCloseDialog)="onDialogClose()">
         </recipe-dialog>
     </div>
+    <div *ngIf="!(isManageMode | async) && !allRecipes.length">
+        <h1 class="no-recipes">No recipes found</h1>
+    </div>
     <div *ngIf="(isManageMode | async)"
          class="manage-recipes">
         <div class="container view-recipes-subtitle">
@@ -61,5 +64,8 @@
                            [user]="user"
                            (dialogClosed)="onDialogClose($event)">
         </app-recipe-manage>
+    </div>
+    <div *ngIf="(isManageMode | async) && !yourRecipes.length">
+        <h1 class="no-recipes">No recipes found</h1>
     </div>
 </div>

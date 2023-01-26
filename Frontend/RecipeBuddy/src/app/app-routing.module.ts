@@ -9,6 +9,7 @@ import { ViewCoursesComponent } from './modules/courses/components/view-courses/
 import { ViewSubscriptionsComponent } from './modules/courses/components/view-subscriptions/view-subscriptions.component';
 import { HomeComponent } from './modules/home/components/home/home.component';
 import { ViewRecipesComponent } from './modules/recipes/components/view-recpies/view-recipes.component';
+import { ProfilePageComponent } from './modules/profile/profile-page/profile-page.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path: 'view-subscriptions',
     component: ViewSubscriptionsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfilePageComponent,
     canActivate: [AuthGuard]
   },
   {

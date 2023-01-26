@@ -50,13 +50,20 @@
     font-size: 2em;
     text-align: center;
     padding: 0 0.5em;
-    background-color: #d3d3d3;
+    background-color: #fffadd;
     text-transform: uppercase;
-    font-weight: lighter;
+    font-weight: 200;
 }
 
 .switch-mode {
     position: absolute;
     top: 3rem;
     left: 3rem;
+}
+
+.no-recipes {
+    padding: 2em 0;
+    text-align: center;
+    font-weight: 300;
+    font-size: 2em;
 }

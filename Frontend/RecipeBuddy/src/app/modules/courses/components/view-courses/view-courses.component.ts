@@ -43,9 +43,8 @@ export class ViewCoursesComponent implements OnInit, OnDestroy {
   }
 
   mapCourses(courses: ICourse[]): ICourse[] {
-    return courses.filter((course: ICourse) => course.mentor !== this.user.name)
+    return courses.filter((course: ICourse) => this.user ? course.mentor !== this.user.name : true)
                   .map((course: ICourse) => {
-                    
       if (!this.user) return { ...course, activeSubscription: false };
 
       const activeSubscription = course.subscriptions.find(subscription => subscription.user.name === this.user.name);
