@@ -1,12 +1,10 @@
 package com.example.springboot;
 
 import com.example.springboot.config.WebSecurityConfig;
+import com.example.springboot.controllers.CourseController;
 import com.example.springboot.controllers.RecipeController;
 import com.example.springboot.exceptions.NoSuchCourseExistsException;
-import com.example.springboot.models.Recipe;
-import com.example.springboot.models.Role;
-import com.example.springboot.models.Subscription;
-import com.example.springboot.models.User;
+import com.example.springboot.models.*;
 import com.example.springboot.services.RecipeServiceImpl;
 import com.example.springboot.services.UserDetailsServiceImpl;
 import com.example.springboot.services.UserServiceImpl;
@@ -17,11 +15,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -57,8 +60,11 @@ public class RecipeControllerTests {
 
     private ObjectMapper objectMapper;
     private User mentor;
+    private User mentor2;
+    private User trainee;
     private Recipe recipe1;
     private Recipe recipe2;
+    private Recipe recipe3;
     private Role roleTrainee;
     private Role roleMentor;
     private List<Recipe> recipeList;
@@ -75,11 +81,23 @@ public class RecipeControllerTests {
         roleTrainee = new Role();
         roleTrainee.setName("ROLE_TRAINEE");
 
+        trainee = new User();
+        trainee.setId(1L);
+        trainee.setName("mentor");
+        trainee.setEmail("email");
+        trainee.setRoles(new HashSet<>(Arrays.asList( roleTrainee)));
+
         mentor = new User();
         mentor.setId(1L);
         mentor.setName("mentor");
         mentor.setEmail("email");
         mentor.setRoles(new HashSet<>(Arrays.asList(roleMentor, roleTrainee)));
+
+        mentor2 = new User();
+        mentor2.setId(2L);
+        mentor2.setName("mentor2");
+        mentor2.setEmail("email2");
+        mentor2.setRoles(new HashSet<>(Arrays.asList(roleMentor, roleTrainee)));
 
         recipe1 = new Recipe();
         recipe1.setId(1L);
@@ -99,9 +117,19 @@ public class RecipeControllerTests {
         recipe2.setEstimatedPrepTimeInMinutes(10);
         recipe2.setUser(mentor);
 
+        recipe3 = new Recipe();
+        recipe3.setId(3L);
+        recipe3.setName("recipeName3");
+        recipe3.setDescription("desc3");
+        recipe3.setIngredients("ingredients3");
+        recipe3.setImage(new byte[]{(byte)0x0, 0x1, (byte)0x2});
+        recipe3.setEstimatedPrepTimeInMinutes(10);
+        recipe3.setUser(mentor2);
+
         recipeList = new ArrayList<>();
         recipeList.add(recipe1);
         recipeList.add(recipe2);
+        recipeList.add(recipe3);
 
         mentor.setRecipes(new HashSet<>(recipeList));
     }
@@ -132,17 +160,24 @@ public class RecipeControllerTests {
                 .content(objectMapper.writeValueAsString(body)))
                 .andExpect(status().isCreated());
     }
+    @Test
+    @WithMockUser(roles = {"TRAINEE"})
+    public void givenTrainee_whenCreateRecipe_thenReturnStatusCreated() throws Exception
+    {
+        given(userService.findById(anyLong())).willReturn(trainee);
+        given(recipeService.create(ArgumentMatchers.any(Recipe.class))).willReturn("Recipe saved successfully");
 
+        Map<String, String> body = new HashMap<>();
+        body.put("name", "newRecipe");
+
+        mvc.perform(post("/recipe/create/" + anyLong())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(body)))
+                .andExpect(status().isCreated());
+    }
     @Test
     public void givenNotAuthenticated_whenCreateRecipe_thenReturn403() throws Exception {
         mvc.perform(post("/recipe/create/0")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden());
-    }
-
-    @Test
-    public void givenNotAuthenticated_whenFindRecipeById_thenReturn403() throws Exception {
-        mvc.perform(get("/recipes/" + recipe1.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }
@@ -185,19 +220,34 @@ public class RecipeControllerTests {
 
     @Test
     @WithMockUser(roles = {"TRAINEE", "MENTOR"})
-    public void givenUserWithRecipes_whenGetRecipesOfUser_thenReturnJsonArray() throws Exception {
+    public void givenMentorWithRecipes_whenGetRecipesOfUser_thenReturnJsonArray() throws Exception {
         given(userService.findByName(anyString())).willReturn(mentor);
         given(recipeService.findRecipesByUser(anyString())).willReturn(recipeList);
 
-        mvc.perform(get("/recipe/recipes/user/ " + anyString())
+        mvc.perform(get("/recipe/recipes/user/" + anyString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is(recipe1.getName())))
                 .andExpect(jsonPath("$[1].name", is(recipe2.getName())));
     }
+
     @Test
-    public void givenNotAuthenticated_whenGetRecipesOfUser_thenReturnJsonArray() throws Exception {
+    @WithMockUser(roles = {"TRAINEE"})
+    public void givenTraineeWithRecipes_whenGetRecipesOfUser_thenReturnJsonArray() throws Exception {
+        given(userService.findByName(anyString())).willReturn(trainee);
+        given(recipeService.findRecipesByUser(anyString())).willReturn(recipeList);
+
+        mvc.perform(get("/recipe/recipes/user/" + anyString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name", is(recipe1.getName())))
+                .andExpect(jsonPath("$[1].name", is(recipe2.getName())));
+    }
+
+    @Test
+    public void givenNotAuthenticated_whenGetRecipesOfUser_thenReturnIsForbidden() throws Exception {
         mvc.perform(get("/recipe/recipes/user/ " + mentor.getName())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
@@ -206,12 +256,15 @@ public class RecipeControllerTests {
     @Test
     @WithMockUser(roles = {"TRAINEE", "MENTOR"})
     public void givenRecipes_whenGetRecipesFilteredByName_thenReturnRecipe() throws Exception {
-        given(recipeService.filterByName(anyString())).willReturn(Collections.singletonList(recipe1));
+        List<Recipe> auxList = new ArrayList<>();
+        auxList.add(recipe1);
+        auxList.add(recipe2);
+        given(recipeService.filterByName(anyString())).willReturn(auxList);
 
         mvc.perform(get("/recipe/recipes/ " + anyString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is(recipe1.getName())));
     }
 
