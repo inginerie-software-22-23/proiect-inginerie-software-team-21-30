@@ -203,6 +203,7 @@ public class CourseControllerUnitTests {
     public void givenMentorWithCourses_whenGetCoursesOfMentor_thenReturnJsonArray() throws Exception {
         given(userService.findByName(anyString())).willReturn(mentor);
         given(courseService.findCoursesByMentor(anyString())).willReturn(courseList);
+        int a;
 
         mvc.perform(get("/course/courses/mentor/ " + anyString())
                         .contentType(MediaType.APPLICATION_JSON))
