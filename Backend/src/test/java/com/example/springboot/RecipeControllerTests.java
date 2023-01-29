@@ -1,10 +1,11 @@
 package com.example.springboot;
 
 import com.example.springboot.config.WebSecurityConfig;
-import com.example.springboot.controllers.CourseController;
 import com.example.springboot.controllers.RecipeController;
 import com.example.springboot.exceptions.NoSuchCourseExistsException;
-import com.example.springboot.models.*;
+import com.example.springboot.models.Recipe;
+import com.example.springboot.models.Role;
+import com.example.springboot.models.User;
 import com.example.springboot.services.RecipeServiceImpl;
 import com.example.springboot.services.UserDetailsServiceImpl;
 import com.example.springboot.services.UserServiceImpl;
@@ -15,16 +16,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -43,21 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(RecipeController.class)
 @Import(WebSecurityConfig.class)
 public class RecipeControllerTests {
-
-    //configuration
-    /*
-    @TestConfiguration
-    static class RecipeControllerTestsContextConfiguration
-    {
-        @Bean
-        public RecipeController recipeController()
-        {
-            return new RecipeController();
-        }
-    }
-    */
-    //end configuration
-
     private ObjectMapper objectMapper;
     private User mentor;
     private User mentor2;
@@ -68,7 +49,6 @@ public class RecipeControllerTests {
     private Role roleTrainee;
     private Role roleMentor;
     private List<Recipe> recipeList;
-    private Subscription subscription;
     final Long NON_EXISTENT_ID = 9999L;
 
     @Before
@@ -85,7 +65,7 @@ public class RecipeControllerTests {
         trainee.setId(1L);
         trainee.setName("mentor");
         trainee.setEmail("email");
-        trainee.setRoles(new HashSet<>(Arrays.asList( roleTrainee)));
+        trainee.setRoles(new HashSet<>(Collections.singletonList(roleTrainee)));
 
         mentor = new User();
         mentor.setId(1L);
@@ -201,9 +181,10 @@ public class RecipeControllerTests {
         mvc.perform(get("/recipe/recipes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].name", is(recipe1.getName())))
-                .andExpect(jsonPath("$[1].name", is(recipe2.getName())));
+                .andExpect(jsonPath("$[1].name", is(recipe2.getName())))
+                .andExpect(jsonPath("$[2].name", is(recipe3.getName())));
     }
 
     @Test
@@ -213,9 +194,10 @@ public class RecipeControllerTests {
         mvc.perform(get("/recipe/recipes")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].name", is(recipe1.getName())))
-                .andExpect(jsonPath("$[1].name", is(recipe2.getName())));
+                .andExpect(jsonPath("$[1].name", is(recipe2.getName())))
+                .andExpect(jsonPath("$[2].name", is(recipe3.getName())));
     }
 
     @Test
@@ -224,12 +206,13 @@ public class RecipeControllerTests {
         given(userService.findByName(anyString())).willReturn(mentor);
         given(recipeService.findRecipesByUser(anyString())).willReturn(recipeList);
 
-        mvc.perform(get("/recipe/recipes/user/" + anyString())
+        mvc.perform(get("/recipe/recipes/user/ " + anyString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].name", is(recipe1.getName())))
-                .andExpect(jsonPath("$[1].name", is(recipe2.getName())));
+                .andExpect(jsonPath("$[1].name", is(recipe2.getName())))
+                .andExpect(jsonPath("$[2].name", is(recipe3.getName())));
     }
 
     @Test
@@ -238,12 +221,13 @@ public class RecipeControllerTests {
         given(userService.findByName(anyString())).willReturn(trainee);
         given(recipeService.findRecipesByUser(anyString())).willReturn(recipeList);
 
-        mvc.perform(get("/recipe/recipes/user/" + anyString())
+        mvc.perform(get("/recipe/recipes/user/ " + anyString())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].name", is(recipe1.getName())))
-                .andExpect(jsonPath("$[1].name", is(recipe2.getName())));
+                .andExpect(jsonPath("$[1].name", is(recipe2.getName())))
+                .andExpect(jsonPath("$[2].name", is(recipe3.getName())));
     }
 
     @Test
@@ -309,6 +293,4 @@ public class RecipeControllerTests {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
-
-
 }
