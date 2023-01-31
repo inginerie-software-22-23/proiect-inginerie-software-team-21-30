@@ -46,7 +46,7 @@ __Localization:__
 
 ## Activity Diagram
 
-[Link](https://lucid.app/lucidchart/dd6790d3-06f6-428d-bfe3-b897265bea45/edit?invitationId=inv_af3ae1b8-ed85-4b20-8efb-a4c7f5fad8e2&page=0_0#) (if the image below is not visible enough)
+[Link](https://user-images.githubusercontent.com/87432371/214105465-6bcda982-27f9-49fa-a464-cd1974ddfe0b.png) (if the image below is not visible enough)
 ![Activity diagram new](https://user-images.githubusercontent.com/87432371/214105465-6bcda982-27f9-49fa-a464-cd1974ddfe0b.png)
 
 ## Project Charter Document
